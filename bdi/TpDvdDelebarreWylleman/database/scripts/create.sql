@@ -453,7 +453,7 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 
 INSERT INTO utilisateurs VALUES(1, 'Delebarre', 'Johann', 'jojo', 'toto');
 INSERT INTO utilisateurs VALUES(2, 'Wylleman', 'Julien', 'juju', 'titi');
-INSERT INTO utilisateurs VALUES(3, ' Le Meur', ' Anne-Françoise', 'lemeur', 'lemeur');
+INSERT INTO utilisateurs VALUES(3, 'Le Meur', 'Anne-Françoise', 'lemeur', 'lemeur');
 
 INSERT INTO categories VALUES(1, 'Science-fiction');
 INSERT INTO categories VALUES(2, 'Action');
