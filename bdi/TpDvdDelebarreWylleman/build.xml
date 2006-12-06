@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<project name="Tomcat DvdThèque" default="deploy">
+	<property environment="myenv" />
+	<property name="catalina.home" value="${myenv.CATALINA_HOME}" />
+	<property file="${basedir}/build.properties"/>
+
+ 	<description>
+		Matière	: ${description}
+		TP		: ${numero} - ${matiere}
+		Sujet	: ${sujet}
+		Binome	: ${binome}
+	</description>
+	
+	<!--
+		========== DEFAULT PROPERTIES ==========
+	-->
+	<!-- <property name="base"		value="dvdthequeDelebarreWylleman" />
+ 	<property name="src"		value="${base}/WEB-INF/src" />
+ 	<property name="lib"		value="lib" />
+ 	<property name="classes"	value="${base}/WEB-INF/classes" />
+	 -->
+	
+	
+	<property name="src"		value="${basedir}/src" />
+	<property name="src-jsp"	value="${src}/views" />
+	<property name="static"		value="${basedir}/static" />
+	<property name="lib"		value="${basedir}/lib" />
+	<property name="build"		value="${basedir}/build" />
+	<property name="classes"	value="${build}/classes" />
+	<property name="warfile"	value="${warfilename}.war" />
+	<property name="buildwar"	value="${build}/war" />
+	<property name="dist"		value="${basedir}/dist" />
+	<property name="conf"		value="${basedir}/conf" />
+	<property name="entete"		value="${binome}-TP${numero}_${matiere}" />
+	<property name="webpage"	value="${host}:${port}/${warfilename}/" />
+	
+	<path id="classpath">
+		<pathelement location="${classes}" />
+ 		<fileset dir="${postgresql.home}">
+			<include name="*.jar" />
+		</fileset>
+ 		<fileset dir="${catalina.home}/common/lib">
+			<include name="servlet-api.jar" />
+		</fileset>
+	</path>
+	
+	<!--
+		========== PREPARATION OF THE DIRECTORIES ==========
+	-->
+	<target name="LASTprepare">
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${classes}" />
+		<!-- <copy todir="${classes}" failonerror="false">
+			<fileset dir="${lib}" includes="**/*.jar" />
+		</copy> -->
+		<copy todir="${catalina.home}/common/lib" failonerror="false">
+			<fileset dir="${lib}" includes="**/*.jar" />
+		</copy>
+	</target>
+	
+	<target name="prepare">
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build}/lib" />
+		<copy todir="${build}/lib" failonerror="false">
+			<fileset dir="${lib}" includes="**/*.jar" />
+		</copy>
+		<mkdir dir="${classes}" />
+		<copy todir="${classes}">
+			<fileset dir="${lib}" includes="**/*.class" />
+		</copy>
+		
+		<mkdir dir="${buildwar}" />
+		<mkdir dir="${buildwar}/META-INF" />
+		<mkdir dir="${buildwar}/WEB-INF" />
+		<copy todir="${buildwar}">
+			<fileset dir="${static}" />
+		</copy>
+		<mkdir dir="${buildwar}/WEB-INF/classes" />
+	</target>
+	
+	<!--
+		========== COMPILE ==========
+	-->
+	<target name="compile" 
+			depends="prepare"
+			description="Compilation du code source.">
+		<javac srcdir="${src}"
+				destdir="${classes}"
+				classpathref="classpath"
+				encoding="utf-8"
+				debug="on">
+      		<include name="**/*.java" />
+			<!-- <compilerarg value="-Xlint"/> -->
+		</javac>
+	</target>
+	
+	<!--
+		========== CREATE WAR FILE ==========
+	-->
+	
+	<!-- Structure des fichiers d'une application JSP :
+                                     |
+               +_____________________+__________+
+               |                     |          |
+            WEB-INF               *.html       *.jsp
+               |                  *.jpg
+     +_________+__________+       *.css
+     |         |          |			...
+     |         |          |
+  web.xml   classes      lib
+  
+  config.   *.class     *.jar
+	-->
+	
+	<target name="war" 
+			depends="compile"
+			description="Création du fichier war." >
+		<copy todir="${buildwar}">
+			<fileset dir="${src-jsp}">
+				<include name="**/*.jsp" />
+			</fileset>
+		</copy>
+		<copy todir="${buildwar}/WEB-INF/classes">
+			<fileset dir="${classes}">
+				<include name="**/*.class" />
+			</fileset>
+		</copy>
+		<jar destfile="${build}/${warfile}">
+			<fileset dir="${buildwar}" includes="**/*" />
+		</jar>
+	</target>
+	
+	<!--
+		========== DEPLOY ==========
+	-->
+	<!-- <target name="deploy" depends="compile, undeploy">
+		<mkdir dir="${catalina.home}/webapps/${base}" />
+		<copy todir="${catalina.home}/webapps/${base}">
+			<fileset dir="${base}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+	</target> -->
+	
+	<target name="deploy" 
+			depends="war, undeploy"
+			description="Déploiement du fichier war dans JOnAS." >
+		<copy file="${build}/${warfile}" todir="${catalina.home}/webapps/" />
+	</target>
+	
+	<!--
+		========== UNDEPLOY ==========
+	-->
+	<!-- <target name="undeploy">
+		<delete includeEmptyDirs="true" 
+				failonerror="false"
+				verbose="true">
+			<fileset dir="${catalina.home}/webapps/${base}"/>
+		</delete>
+	</target> -->
+	
+	<target name="undeploy" 
+			description="Retrait du fichier war de JOnAS.">
+		<delete file="${catalina.home}/webapps/${warfile}" failonerror="false" />
+		<delete includeEmptyDirs="true" 
+				failonerror="false"
+				verbose="false">
+			<fileset dir="${catalina.home}/webapps/${warfilename}"/>
+		</delete>
+	</target>
+	
+	<!--
+		========== CLEANING ==========
+	-->
+	<target name="clean"
+			depends="undeploy"
+			description="Nettoyage du répertoire de travail.">
+		<delete dir="${build}" failonerror="true" />
+		<delete dir="${dist}" failonerror="true" />
+		<delete file="${warfile}" />
+	</target>
+	
+	<!--
+		========== RUN THE APPLICATION ==========
+	-->
+	<target name="run" depends="deploy">
+		<echo message="Lancement de l'application: ${webpage}" />
+		<exec executable="${browser}" spawn="true">
+			<arg value="${webpage}" />
+		</exec>
+	</target>
+	
+	<!--
+		========== INIT TIME ==========
+	-->
+	<target name="init_time">
+		<!-- Create the time stamp -->
+		<tstamp>
+			<format property="DATE" pattern="dd.MM.yyyy" />
+		</tstamp>
+	</target>
+	
+	<!--
+		========== DOCUMENTATION ==========
+	-->
+	<target name="doc" 
+			depends="prepare"
+			description="Génération de la documentation.">
+		<property name="doc.dir" value="${build}/doc" />
+		<mkdir dir="${doc.dir}" />
+		<javadoc author="yes" 
+				version="yes" 
+				use="yes"
+				classpathref="classpath"
+            	destdir="${doc.dir}"
+            	private="true">
+			<fileset dir="${src}" includes="**/*.java" />
+		</javadoc>
+	</target>
+	
+	<!--
+		========== DISTRIBUTION ==========
+	-->
+	<target name="dist" 
+			depends="init_time, compile"
+			description="Génération de l'archive à rendre au responsable de TP.">
+		<property name="final" value="${entete}-${DATE}" />
+		<mkdir dir="${dist}/${binome} - ${sujet}" />
+		<copy todir="${dist}/${binome} - ${sujet}">
+			<fileset dir="${basedir}" excludes="${build}/**, ${dist}/**, ${warfile}" />
+		</copy>
+		
+		<tar destfile="${dist}/tmp.tar" 
+        		longfile="fail"
+        		basedir="${dist}" />
+		<gzip src="${dist}/tmp.tar" zipfile="${dist}/${final}.tar.gz" />
+		<delete file="${dist}/tmp.tar" />
+	</target>
+	
+	<!--
+		========== FILL THE DATABASE ==========
+	-->
+	<target name="database"
+			description="Exécution des instructions SQL contenus dans le fichier ${sqlfile}.">
+		<java jar="${jonas.root}/lib/commons/jonas/hsqldb.jar"
+				fork="true"
+				failonerror="true">
+			<arg value="--autoCommit" />
+			<arg value="--continueOnErr" />
+			<arg value="--rcfile" />
+			<arg value="${rcfile}" />
+			<arg value="dbjonas" />
+			<arg value="${sqlfile}" />
+		</java>
+	</target>
+
+</project>
