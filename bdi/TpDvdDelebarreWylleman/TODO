@@ -1,0 +1,13 @@
+Pool de connexions -> OK (cf. context.xml)
+Choix techniques -> EN COURS (cf. README)
+Appliquer les modifications du DAO DVD aux autres DAO.
+Faire tous les DAO (liste?).
+Commenter les DAO.
+Tester les DAO.
+Faire tous les objets metiers (liste?).
+Faire tous les controllers (liste?).
+Faire toutes les vues (liste?).
+Faire le README.
+Faire la doc utilisateur.
+Tester le build.xml.
+Tester sous Linux.
