@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Copyright 2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+    <display-name>dvdthequeDelebarreWylleman</display-name>
+    
+	<description>
+		dvdthequeDelebarreWylleman
+    </description>
+	
+	<welcome-file-list>
+		<welcome-file>/view.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/error.jsp</location>
+    </error-page>
+	
+	<!-- SERVLETS -->
+	
+	<servlet>
+		<servlet-name>ControllerLogin</servlet-name>
+		<servlet-class>controllers.Login</servlet-class>
+        <!-- paramètres d'initialisation de la servlet -->
+        <init-param>
+            <param-name>factory</param-name>
+            <param-value>dao.postgresql.PostGreSQLDAOFactory</param-value>
+        </init-param>
+	</servlet>
+	
+    <servlet-mapping>
+		<servlet-name>ControllerLogin</servlet-name>
+		<url-pattern>/ControllerLogin</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ControllerLogout</servlet-name>
+		<servlet-class>controllers.Logout</servlet-class>
+	</servlet>
+	
+    <servlet-mapping>
+		<servlet-name>ControllerLogout</servlet-name>
+		<url-pattern>/ControllerLogout</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ControllerAdd</servlet-name>
+		<servlet-class>controllers.Add</servlet-class>
+	</servlet>
+	
+    <servlet-mapping>
+		<servlet-name>ControllerAdd</servlet-name>
+		<url-pattern>/ControllerAdd</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ControllerSearch</servlet-name>
+		<servlet-class>controllers.Search</servlet-class>
+	</servlet>
+	
+    <servlet-mapping>
+		<servlet-name>ControllerSearch</servlet-name>
+		<url-pattern>/ControllerSearch</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ViewAdd</servlet-name>
+		<servlet-class>views.Add</servlet-class>
+	</servlet>
+	
+    <servlet-mapping>
+		<servlet-name>ViewAdd</servlet-name>
+		<url-pattern>/ViewAdd</url-pattern>
+	</servlet-mapping>
+
+</web-app>

@@ -1,0 +1,61 @@
+<!-- <Context path="/dvdthequeDelebarreWylleman" 
+		reloadable="true" 
+		docBase="dvdthequeDelebarreWylleman" >
+	<Resource name="jdbc/dvdtheque"
+		auth="Container"
+		type="javax.sql.DataSource"/>
+	<ResourceParams name="jdbc/dvdtheque">
+		<parameter>
+			<name>username</name>
+			<value>lemeur</value>
+	 	</parameter>
+		<parameter>
+			<name>password</name>
+			<value>lemeur</value>
+		</parameter>
+	 	<parameter>
+			<name>driverClassName</name>
+			<value>org.postgresql.Driver</value>
+	 	</parameter>
+		<parameter>
+			<name>url</name>
+			<value>jdbc:postgresql://localhost:5432/dvdthequeDelebarreWylleman</value>
+		</parameter>
+	</ResourceParams>		 
+</Context> -->
+
+<!-- http://www.evolutionnext.com/blog/2005/10/13/1129259088959.html -->
+<Context path="/dvdthequeDelebarreWylleman" 
+		docBase="dvdthequeDelebarreWylleman"
+        debug="5" 
+		reloadable="true" 
+		crossContext="true">
+	
+	<Logger className="org.apache.catalina.logger.FileLogger"
+			prefix="localhost_dvdthequeDelebarreWylleman_log." 
+			suffix=".txt"
+			timestamp="true"/>
+	
+	<Resource name="jdbc/dvdtheque" 
+			auth="Container"
+			type="javax.sql.DataSource" 
+			username="lemeur" 
+			password="lemeur"
+			driverClassName="org.postgresql.Driver" 
+			url="jdbc:postgresql://localhost:5432/dvdthequeDelebarreWylleman"
+			defaultAutoCommit="false"
+			maxActive="10" 
+			maxIdle="10"
+			maxWait="10000"
+			validationQuery="select 1" />
+			
+	<!-- <Parameter name="factory" 
+			value="dao.postgresql.PostGreSQLDAOFactory" 
+			override="false" />
+			
+	<Environment name="factory" 
+			value="dao.postgresql.PostGreSQLDAOFactory" 
+			type="java.lang.String" 
+			override="false" /> -->
+		 
+</Context>
