@@ -110,6 +110,32 @@ ALTER TABLE public.categories OWNER TO lemeur;
 SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('categories', 'id'), 1, false);
 
 
+
+--
+-- TOC entry 1193 (class 1259 OID 16419)
+-- Dependencies: 4
+-- Name: utilisateurs; Type: TABLE; Schema: public; Owner: lemeur; Tablespace: 
+--
+
+CREATE TABLE utilisateurs (
+    id serial NOT NULL,
+    nom character varying(20),
+    prenom character varying(20),
+    login character varying(20),
+    password character varying(20)
+);
+
+
+ALTER TABLE public.utilisateurs OWNER TO lemeur;
+
+--
+-- TOC entry 1570 (class 0 OID 0)
+-- Dependencies: 1203
+-- Name: utilisateurs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('utilisateurs', 'id'), 1, false);
+
 --
 -- TOC entry 1196 (class 1259 OID 16425)
 -- Dependencies: 4
@@ -118,8 +144,8 @@ SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('categories', 'id'), 
 
 CREATE TABLE dvds (
     id serial NOT NULL,
-    utilisateurs_id integer NOT NULL,
-    categories_id integer NOT NULL,
+    utilisateurs_id integer,-- NOT NULL, IMPOSSIBLE CF. README
+    categories_id integer,-- NOT NULL, IMPOSSIBLE CF. README
     titre character varying(45),
     parution date
 );
@@ -179,32 +205,6 @@ CREATE TABLE reserves (
 
 
 ALTER TABLE public.reserves OWNER TO lemeur;
-
---
--- TOC entry 1193 (class 1259 OID 16419)
--- Dependencies: 4
--- Name: utilisateurs; Type: TABLE; Schema: public; Owner: lemeur; Tablespace: 
---
-
-CREATE TABLE utilisateurs (
-    id serial NOT NULL,
-    nom character varying(20),
-    prenom character varying(20),
-    "login" character varying(20),
-    "password" character varying(20)
-);
-
-
-ALTER TABLE public.utilisateurs OWNER TO lemeur;
-
---
--- TOC entry 1570 (class 0 OID 0)
--- Dependencies: 1203
--- Name: utilisateurs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('utilisateurs', 'id'), 1, false);
-
 
 --
 -- TOC entry 1557 (class 0 OID 16423)
@@ -311,19 +311,30 @@ ALTER TABLE ONLY dvds_has_artistes
 
 
 --
+-- TOC entry 1532 (class 2606 OID 16459)
+-- Dependencies: 1193 1193
+-- Name: utilisateurs_pkey; Type: CONSTRAINT; Schema: public; Owner: lemeur; Tablespace: 
+--
+
+ALTER TABLE ONLY utilisateurs
+    ADD CONSTRAINT utilisateurs_pkey PRIMARY KEY (id);
+
+
+--
 -- TOC entry 1538 (class 2606 OID 16467)
 -- Dependencies: 1196 1196
 -- Name: dvds_pkey; Type: CONSTRAINT; Schema: public; Owner: lemeur; Tablespace: 
 --
 
+
 ALTER TABLE ONLY dvds
     ADD CONSTRAINT dvds_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY dvds
-    ADD CONSTRAINT dvds_utilisateurs_id_fkey FOREIGN KEY (utilisateurs_id) REFERENCES utilisateurs(id);
+    ADD CONSTRAINT dvds_categories_id_fkey FOREIGN KEY (categories_id) REFERENCES categories(id);
 
 ALTER TABLE ONLY dvds
-    ADD CONSTRAINT dvds_categories_id_fkey FOREIGN KEY (categories_id) REFERENCES categories(id);
+    ADD CONSTRAINT dvds_utilisateurs_id_fkey FOREIGN KEY (utilisateurs_id) REFERENCES utilisateurs(id);
 
 --
 -- TOC entry 1542 (class 2606 OID 16511)
@@ -343,16 +354,6 @@ ALTER TABLE ONLY emprunts
 
 ALTER TABLE ONLY reserves
     ADD CONSTRAINT reserves_pkey PRIMARY KEY (dvds_id, utilisateurs_id);
-
-
---
--- TOC entry 1532 (class 2606 OID 16459)
--- Dependencies: 1193 1193
--- Name: utilisateurs_pkey; Type: CONSTRAINT; Schema: public; Owner: lemeur; Tablespace: 
---
-
-ALTER TABLE ONLY utilisateurs
-    ADD CONSTRAINT utilisateurs_pkey PRIMARY KEY (id);
 
 
 --
@@ -463,10 +464,10 @@ INSERT INTO utilisateurs VALUES(1, 'Delebarre', 'Johann', 'jojo', 'toto');
 INSERT INTO utilisateurs VALUES(2, 'Wylleman', 'Julien', 'juju', 'titi');
 INSERT INTO utilisateurs VALUES(3, 'Le Meur', 'Anne-Françoise', 'lemeur', 'lemeur');
 
-INSERT INTO categories VALUES(1, 'Science-fiction');
-INSERT INTO categories VALUES(2, 'Action');
-INSERT INTO categories VALUES(3, 'Animation');
-INSERT INTO categories VALUES(4, 'Aventure');
+INSERT INTO categories VALUES(DEFAULT, 'Science-fiction');
+INSERT INTO categories VALUES(DEFAULT, 'Action');
+INSERT INTO categories VALUES(DEFAULT, 'Animation');
+INSERT INTO categories VALUES(DEFAULT, 'Aventure');
 INSERT INTO categories VALUES(DEFAULT, 'Bollywood');
 INSERT INTO categories VALUES(DEFAULT, 'Cinéma Asiatique');
 INSERT INTO categories VALUES(DEFAULT, 'Comédie');

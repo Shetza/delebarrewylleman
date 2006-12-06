@@ -232,7 +232,7 @@
 <COMMON_DATATYPE ID="35" />
 </COMMON_DATATYPES>
 <TABLEPREFIXES>
-<TABLEPREFIX Name="Defaut (pas de pr\\233fixe)" />
+<TABLEPREFIX Name="Defaut (pas de pr\\\\233fixe)" />
 </TABLEPREFIXES>
 <REGIONCOLORS>
 <REGIONCOLOR Color="Red=#FFEEEC" />
@@ -365,13 +365,13 @@
 <OPTIONSELECT Value="0" />
 </OPTIONSELECTED>
 </COLUMN>
-<COLUMN ID="1131" ColName="categories_id" PrevColName="" Pos="1" idDatatype="5" DatatypeParams="" Width="-1" Prec="-1" PrimaryKey="0" NotNull="1" AutoInc="0" IsForeignKey="1" DefaultValue="" Comments="">
+<COLUMN ID="1131" ColName="categories_id" PrevColName="" Pos="1" idDatatype="5" DatatypeParams="" Width="-1" Prec="-1" PrimaryKey="0" NotNull="0" AutoInc="0" IsForeignKey="1" DefaultValue="" Comments="">
 <OPTIONSELECTED>
 <OPTIONSELECT Value="1" />
 <OPTIONSELECT Value="0" />
 </OPTIONSELECTED>
 </COLUMN>
-<COLUMN ID="1122" ColName="utilisateurs_id" PrevColName="" Pos="1" idDatatype="5" DatatypeParams="" Width="-1" Prec="-1" PrimaryKey="0" NotNull="1" AutoInc="0" IsForeignKey="1" DefaultValue="" Comments="">
+<COLUMN ID="1122" ColName="utilisateurs_id" PrevColName="" Pos="1" idDatatype="5" DatatypeParams="" Width="-1" Prec="-1" PrimaryKey="0" NotNull="0" AutoInc="0" IsForeignKey="1" DefaultValue="" Comments="">
 <OPTIONSELECTED>
 <OPTIONSELECT Value="1" />
 <OPTIONSELECT Value="0" />
