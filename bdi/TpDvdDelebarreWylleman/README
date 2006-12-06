@@ -1,0 +1,27 @@
+psql -d dvdthequeDelebarreWylleman -U lemeur -f database/scripts/delete.sql
+password: lemeur
+
+psql -d postgres -U lemeur -f database/scripts/create.sql
+password: lemeur
+
+
+
+les dao create n'utilisent pas l'auto increment des tables
+puisque la version de jdbc ne gere pas la recuperation
+des clefs generees a l'insertion de nouvelles entrees 
+dans les tables. C'est pourquoi chaque dao gere lui-meme
+un semblant d'auto-increment en specifiant la clef d'un
+nouvel enregistrement comme etant la somme +1 des lignes
+de la table.
+-> bug possible au niveau du script d'initialisation des
+tables. Attention a bien respecter cette regle: 
+le premier enregistrement a pour clef 1, le 2me 2, etc...
+
+clef etrangere null possible dans table dvds car le dao dvd
+cree une nouvelle entree dans la table dvds avec des 
+valeurs null des clefs etrangere.
+Ancienne version etait not null mais il falait 
+	soit specifier la valeur des clefs etrangeres 
+en param de la methode create (generique) donc pas terrible;
+	soit mettre des valeurs bidons en clefs etrangeres
+qui devait exsiter. Ce qui revenait a mettre null.
