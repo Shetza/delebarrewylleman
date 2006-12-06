@@ -119,6 +119,7 @@ SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('categories', 'id'), 
 CREATE TABLE dvds (
     id serial NOT NULL,
     utilisateurs_id integer NOT NULL,
+    categories_id integer NOT NULL,
     titre character varying(45),
     parution date
 );
@@ -157,7 +158,9 @@ SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('dvds', 'id'), 1, fal
 
 CREATE TABLE emprunts (
     dvds_id integer NOT NULL,
-    utilisateurs_id integer NOT NULL
+    utilisateurs_id integer NOT NULL,
+	debut date,
+	fin date
 );
 
 
@@ -316,6 +319,11 @@ ALTER TABLE ONLY dvds_has_artistes
 ALTER TABLE ONLY dvds
     ADD CONSTRAINT dvds_pkey PRIMARY KEY (id);
 
+ALTER TABLE ONLY dvds
+    ADD CONSTRAINT dvds_utilisateurs_id_fkey FOREIGN KEY (utilisateurs_id) REFERENCES utilisateurs(id);
+
+ALTER TABLE ONLY dvds
+    ADD CONSTRAINT dvds_categories_id_fkey FOREIGN KEY (categories_id) REFERENCES categories(id);
 
 --
 -- TOC entry 1542 (class 2606 OID 16511)
@@ -485,9 +493,9 @@ INSERT INTO categories VALUES(DEFAULT, 'Sports, Loisirs');
 INSERT INTO categories VALUES(DEFAULT, 'Super Héros');
 INSERT INTO categories VALUES(DEFAULT, 'Thriller');
 
-INSERT INTO dvds VALUES(1, 1, 'The Matrix', '1999-06-23');
-INSERT INTO dvds VALUES(2, 1, 'The Matrix Reloaded', '2003-05-16');
-INSERT INTO dvds VALUES(3, 1, 'The Matrix Revolutions', '2003-11-05');
+INSERT INTO dvds VALUES(1, 1, 1, 'The Matrix', '1999-06-23');
+INSERT INTO dvds VALUES(2, 1, 1, 'The Matrix Reloaded', '2003-05-16');
+INSERT INTO dvds VALUES(3, 1, 1, 'The Matrix Revolutions', '2003-11-05');
 
 INSERT INTO artistes VALUES(1, 'Keanu Reeves', 'ACTEUR');
 INSERT INTO dvds_has_artistes VALUES(1, 1);
