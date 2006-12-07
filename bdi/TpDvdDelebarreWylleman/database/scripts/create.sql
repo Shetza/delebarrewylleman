@@ -185,8 +185,8 @@ SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('dvds', 'id'), 1, fal
 CREATE TABLE emprunts (
     dvds_id integer NOT NULL,
     utilisateurs_id integer NOT NULL,
-	debut date,
-	fin date
+	date_emprunt date,
+	date_retour date
 );
 
 
