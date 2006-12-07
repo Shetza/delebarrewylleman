@@ -5,7 +5,7 @@ begin
 			from vue_nombre_emprunts;
 
 		if(nbDvdEmpruntes > 3) then
-			RAISE EXCEPTION 'emprunts impossible(max atteint)';
+			RAISE EXCEPTION 'emprunt impossible(max atteint)';
 	end if;
 	RETURN NEW;
 end;
