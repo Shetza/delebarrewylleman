@@ -8,20 +8,53 @@ Vue des réservations de dvd
 Trigger de vérification de réservation possible
 Pool de connexions -> OK (cf. context.xml)
 Choix techniques -> EN COURS (cf. README)
-Appliquer les modifications du DAO DVD aux autres DAO.
+Appliquer les modifications du DAO DVD aux autres DAO -> OK
 PostGreSQLDVDDAO OK
 PostGreSQLDAOUser OK
-PostGreSQLDAOKind A FAIRE
+PostGreSQLDAOKind OK
 
-Faire tous les DAO (liste?).
-Commenter les DAO.
+Faire tous les DAO (liste?):
+	DVDDAO OK
+	KindDAO OK
+	UserDAO OK
+	
+Commenter les classes:
+	dao.core.ModelDAO OK
+	dao.core.DAOException NON
+	dao.core.DAOFactory NON
+	
+	dao.business.DVDDAO OK
+	dao.business.KindDAO OK
+	dao.business.UserDAO OK
+	
+	dao.postgresql.PostGreSQLCommons NON
+	dao.postgresql.PostGreSQLFactory NON
+	dao.postgresql.PostGreSQLDVDDAO OK
+	dao.postgresql.PostGreSQLDAOUser OK
+	dao.postgresql.PostGreSQLDAOKind OK
+	
 Tester les DAO.
-Faire tous les objets metiers (liste?).
-Faire tous les controllers (liste?).
+Faire tous les objets metiers (liste?):
+	Model - AModel
+	DVD
+	Kind
+	User
+	
+Faire tous les controllers (liste?):
+	Controller OK
+	Add OK
+	Login OK
+	Logout OK
+	Search EN COURS
+	PrepareKinds OK
+	
 Faire toutes les vues (liste?).
-Faire le README.
-Faire la doc utilisateur.
+Faire le README - EN COURS
+
+Faire la doc utilisateur
 Tester le build.xml.
 Tester sous Linux.
 
-Faire la fonction "rechercherDVD"
+Faire la fonction "se logger" - FINIE
+Faire la fonction "se delogger" - FINIE
+Faire la fonction "rechercherDVD" - EN COURS
