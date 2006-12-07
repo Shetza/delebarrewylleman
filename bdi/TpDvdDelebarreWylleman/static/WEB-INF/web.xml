@@ -84,13 +84,13 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>ViewAdd</servlet-name>
-		<servlet-class>views.Add</servlet-class>
+		<servlet-name>ControllerPrepareKinds</servlet-name>
+		<servlet-class>controllers.PrepareKinds</servlet-class>
 	</servlet>
 	
     <servlet-mapping>
-		<servlet-name>ViewAdd</servlet-name>
-		<url-pattern>/ViewAdd</url-pattern>
+		<servlet-name>ControllerPrepareKinds</servlet-name>
+		<url-pattern>/ControllerPrepareKinds</url-pattern>
 	</servlet-mapping>
 
 </web-app>
