@@ -25,3 +25,9 @@ Ancienne version etait not null mais il falait
 en param de la methode create (generique) donc pas terrible;
 	soit mettre des valeurs bidons en clefs etrangeres
 qui devait exsiter. Ce qui revenait a mettre null.
+
+PostGreSQLCommons gère le pool de connexion et se preoccupe
+de distribuer les connexions au divers DAO.
+
+Chaque DAO s'occupe de recuperer une connexion, 
+d'en gerer le cycle de vie et d'effectuer commit et rollback.
