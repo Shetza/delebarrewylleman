@@ -83,15 +83,5 @@
 		<servlet-name>ControllerSearch</servlet-name>
 		<url-pattern>/ControllerSearch</url-pattern>
 	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>ControllerPrepareKinds</servlet-name>
-		<servlet-class>controllers.PrepareKinds</servlet-class>
-	</servlet>
-	
-    <servlet-mapping>
-		<servlet-name>ControllerPrepareKinds</servlet-name>
-		<url-pattern>/ControllerPrepareKinds</url-pattern>
-	</servlet-mapping>
 
 </web-app>
