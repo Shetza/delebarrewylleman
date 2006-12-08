@@ -15,18 +15,8 @@ import javax.servlet.ServletException;
 
 public class Logout extends Controller {
 	
-	/**
-	 * Le contexte de la <code>Servlet</code>/
-	 */
-	private ServletContext context;
-	
-	public void init(ServletConfig config) throws ServletException {
-		try{
-			context = config.getServletContext();
-		} 
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		this.doGet(request, response);
 	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

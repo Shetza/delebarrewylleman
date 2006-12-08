@@ -18,55 +18,35 @@ import javax.servlet.ServletException;
 
 public class Search extends Controller {
 	
-	/**
-	 * La fabrique de DAO.
-	 */
-	private DAOFactory factory;
-		
-	/**
-	 * L'utilisateur de la session en cours.
-	 */
-	private User user;
-	
-	public void init(ServletConfig config) throws ServletException {
-		try{
-			ServletContext context = config.getServletContext();
-			factory = (DAOFactory) context.getAttribute("factory");
-			user = (User) context.getAttribute("user");
-		} 
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-    
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		this.search(request, response, null, -1, null);
+		this.search(request, response, null, "-1", null);
 	}
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		int kindId = -1;
-		String title = null;
-		String date = null;
-		
-		title = request.getParameter("title");
+		String title = request.getParameter("title");
 		String tempKind = request.getParameter("kind");
-		date = request.getParameter("date");
+		String date = request.getParameter("date");
 		
-		kindId = Integer.parseInt(tempKind);
-		
-		this.search(request, response, title, kindId, date);
+		this.search(request, response, title, tempKind, date);
 	}
 	
-	private void search(HttpServletRequest request, HttpServletResponse response, String title, int kindId, String date) throws IOException, ServletException {
+	private void search(HttpServletRequest request, HttpServletResponse response, String title, String tempKind, String date) throws IOException, ServletException {
+		String source = request.getParameter("source");
+		String tempUser = request.getParameter("user");
 		try {			
-			DVDDAO dvdDAO = (DVDDAO) factory.getDAO("dvd");
-			List dvds = dvdDAO.search(title, kindId, date);
+			int kindId = -1;
+			if (tempKind != null && !tempKind.equals("") ) kindId = Integer.parseInt(tempKind);
+			int userId = -1;
+			if (tempUser != null && !tempUser.equals("") ) userId = Integer.parseInt(tempUser);
 			
-			super.forward("search", "message", dvds, request, response);
+			DVDDAO dvdDAO = (DVDDAO) factory.getDAO("dvd");
+			List dvds = dvdDAO.search(userId, title, kindId, date);
+			
+			super.forward(source, "message", dvds, request, response);
 		}
 		catch(Exception e) {
 			String error = "Impossible de poursuivre la recherche, une erreur est survenue: " + e.toString();
-			super.forward("search", "error", error, request, response);
+			super.forward(source, "error", error, request, response);
 		}
 	}
 	

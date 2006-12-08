@@ -1,29 +1,3 @@
-<!-- <Context path="/dvdthequeDelebarreWylleman" 
-		reloadable="true" 
-		docBase="dvdthequeDelebarreWylleman" >
-	<Resource name="jdbc/dvdtheque"
-		auth="Container"
-		type="javax.sql.DataSource"/>
-	<ResourceParams name="jdbc/dvdtheque">
-		<parameter>
-			<name>username</name>
-			<value>lemeur</value>
-	 	</parameter>
-		<parameter>
-			<name>password</name>
-			<value>lemeur</value>
-		</parameter>
-	 	<parameter>
-			<name>driverClassName</name>
-			<value>org.postgresql.Driver</value>
-	 	</parameter>
-		<parameter>
-			<name>url</name>
-			<value>jdbc:postgresql://localhost:5432/dvdthequeDelebarreWylleman</value>
-		</parameter>
-	</ResourceParams>		 
-</Context> -->
-
 <!-- http://www.evolutionnext.com/blog/2005/10/13/1129259088959.html -->
 <Context path="/dvdthequeDelebarreWylleman" 
 		docBase="dvdthequeDelebarreWylleman"
@@ -48,14 +22,5 @@
 			maxIdle="10"
 			maxWait="10000"
 			validationQuery="select 1" />
-			
-	<!-- <Parameter name="factory" 
-			value="dao.postgresql.PostGreSQLDAOFactory" 
-			override="false" />
-			
-	<Environment name="factory" 
-			value="dao.postgresql.PostGreSQLDAOFactory" 
-			type="java.lang.String" 
-			override="false" /> -->
 		 
 </Context>

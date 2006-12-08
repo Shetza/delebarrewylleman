@@ -35,9 +35,10 @@
 				%>
 				<li><a href="ControllerLogout"><b>Se d&eacute;connecter</b></a></li>
 				<br>
-				<li><a href="ControllerPrepareKinds?source=add">Ajouter un DVD</a></li>
+				<li><a href="view.jsp?action=add">Ajouter un DVD</a></li>
 				<li><a href="view.jsp?action=remove">Supprimer un DVD</a></li>
-				<li><a href="ControllerPrepareKinds?source=search">Rechercher un DVD</a></li>
+				<li><a href="ControllerSearch?source=search">Rechercher un DVD</a></li>
+				<li><a href="ControllerSearch?user=<%= user.getId() %>&source=myDVDs">Mes DVDs</a></li>
 				<br>
 				<li><a href="view.jsp?action=tools">Outils</a></li>
 				<br>
@@ -58,6 +59,7 @@
 		request.setAttribute("message", new String("Bienvenue sur le service de partage de DVDs de Johann DELEBARRE et Julien WYLLEMAN.<br>\nMerci de vous identifier."));
 	}
 	else {
+		// Si l'utilisateur n'est pas identifie et qu'il n'est pas en cours ni d'ouverture ni de fermeture de session 
 		if ( user == null && !action.equals("login") && !action.equals("logout") ) {
 			request.setAttribute("error", new String("Acc&egrave;s restreint, veuillez vous identifier."));
 		}

@@ -16,31 +16,10 @@ import javax.servlet.ServletException;
 
 public class Login extends Controller {
 	
-	/**
-	 * La fabrique de DAO.
-	 */
-	private DAOFactory factory;
-		
-	/**
-	 * Le contexte de la <code>Servlet</code>/
-	 */
-	private ServletContext context;
-	
-	public void init(ServletConfig config) throws ServletException {
-		try{
-			context = config.getServletContext();
-			
-			String factoryType = config.getInitParameter("factory");
-			
-			Class c = Class.forName(factoryType);
-			factory = (DAOFactory) c.newInstance();
-			if (factory == null) throw new Exception("Boom - No DAOFactory");
-			
-			context.setAttribute("factory", factory);
-		} 
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		// Impossible de s'identifier par la methode GET !!!
+		// On transmet sans rien faire.
+		super.forward("", request, response);
 	}
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

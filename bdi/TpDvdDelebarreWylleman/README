@@ -27,3 +27,8 @@ de distribuer les connexions au divers DAO.
 
 Chaque DAO s'occupe de recuperer une connexion, 
 d'en gerer le cycle de vie et d'effectuer commit et rollback.
+
+La liste des categories est calculee une fois pour toute,
+a l'initialisation. De toutes facon, il est impossible d'ajouter
+une nouvelle categories par l'application.
+Si une nouvelle categories est ajoutee, relancer l'application.

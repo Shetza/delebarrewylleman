@@ -16,26 +16,6 @@ import javax.servlet.ServletException;
 
 public class PrepareKinds extends Controller {
 	
-	/**
-	 * La fabrique de DAO.
-	 */
-	private DAOFactory factory;
-		
-	/**
-	 * Le contexte de la <code>Servlet</code>/
-	 */
-	private ServletContext context;
-	
-	public void init(ServletConfig config) throws ServletException {
-		try {
-			context = config.getServletContext();
-			factory = (DAOFactory) context.getAttribute("factory");
-		} 
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		this.doGet(request, response);
 	}
@@ -45,10 +25,11 @@ public class PrepareKinds extends Controller {
 		try {
 			List kinds = (List) context.getAttribute("kinds");
 			if ( kinds == null || kinds.isEmpty() ) {
-				System.out.println("Construction de la liste des categories.");
+				System.out.println("Construction de la liste des categories en cours.");
 				KindDAO kindDAO = (KindDAO) factory.getDAO("kind");
 				kinds = kindDAO.search(null);
 				context.setAttribute("kinds", kinds);
+				System.out.println("Construction de la liste des categories finie.");
 			}
 			super.forward(source, request, response);
 		} catch(Exception e) {

@@ -21,33 +21,20 @@ import javax.servlet.ServletException;
 
 public class Add extends Controller {
 	
-	/**
-	 * La fabrique de DAO.
-	 */
-	private DAOFactory factory;
-	
-	/**
-	 * L'utilisateur de la session en cours.
-	 */
-	private User user;
-	
-	public void init(ServletConfig config) throws ServletException {
-		try {
-			ServletContext context = config.getServletContext();
-			factory = (DAOFactory) context.getAttribute("factory");
-			user = (User) context.getAttribute("user");
-		} 
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		// Impossible d'ajouter un DVD par la methode GET !!!
+		// On transmet sans rien faire.
+		super.forward("", request, response);
 	}
-    
+	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		int kindId = -1;
 		String title = null;
 		Date date = null;
 		
 		try {
+			User user = (User) context.getAttribute("user");
+			
 			title = request.getParameter("title");
 			String tempKind = request.getParameter("kind");
 			String tempDate = request.getParameter("date");
@@ -81,7 +68,7 @@ public class Add extends Controller {
 				
 				dvdDAO.update(dvd);
 				
-				String message = "Le DVD " + title + " paru le " + date + " a bien &eacute;t&eacute; ajout&eacute; sous la cat&eacute;gorie " + kind.getName() + ".";
+				String message = "Le DVD <b>" + title + "</b> paru le <u>" + date + "</u> a bien &eacute;t&eacute; ajout&eacute; sous la cat&eacute;gorie <i>" + kind.getName() + "</i>.";
 				super.forward("", "message", message, request, response);
 			}
 		}

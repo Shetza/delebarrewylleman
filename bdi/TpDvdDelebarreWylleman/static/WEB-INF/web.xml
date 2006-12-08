@@ -36,16 +36,17 @@
         <location>/error.jsp</location>
     </error-page>
 	
+	<!-- La fabrique de DAO sera disponible par toutes les Servlets -->
+	<context-param>
+		<param-name>factory</param-name>
+		<param-value>dao.postgresql.PostGreSQLDAOFactory</param-value>
+	</context-param>
+	
 	<!-- SERVLETS -->
 	
 	<servlet>
 		<servlet-name>ControllerLogin</servlet-name>
 		<servlet-class>controllers.Login</servlet-class>
-        <!-- paramètres d'initialisation de la servlet -->
-        <init-param>
-            <param-name>factory</param-name>
-            <param-value>dao.postgresql.PostGreSQLDAOFactory</param-value>
-        </init-param>
 	</servlet>
 	
     <servlet-mapping>

@@ -69,10 +69,11 @@ public class PostGreSQLDVDDAO implements DVDDAO {
 	}
 	
 	/* (non-Javadoc)
-     * @see dao.business.DVDDAO#search(String, int, String)
+     * @see dao.business.DVDDAO#search(int, String, int, String)
      */
-	public List search(String title, int kind, String date) throws DAOException {
+	public List search(int owner, String title, int kind, String date) throws DAOException {
 		String query = "SELECT * FROM dvds WHERE TRUE" ;
+		if ( owner != -1 ) query += " AND utilisateurs_id = " + owner ;
 		if ( title != null ) query += " AND titre ~~ '%" + title + "%'" ;
 		if ( kind != -1 ) query += " AND categories_id = " + kind ;
 		if ( date != null ) query += " AND parution ~~ '%" + date + "%'" ;
@@ -91,7 +92,7 @@ public class PostGreSQLDVDDAO implements DVDDAO {
 				DVD currentDVD = new DVD(rs.getInt("id"));
 				currentDVD.setKind(Integer.parseInt(rs.getString("categories_id")));
 				currentDVD.setUser(Integer.parseInt(rs.getString("utilisateurs_id")));
-				currentDVD.setTitle(rs.getString("title"));
+				currentDVD.setTitle(rs.getString("titre"));
 				currentDVD.setDate(Date.valueOf(rs.getString("parution")));
 				result.add(currentDVD);
 			}
