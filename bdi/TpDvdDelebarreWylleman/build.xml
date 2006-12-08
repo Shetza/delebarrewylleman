@@ -22,7 +22,21 @@
 	 -->
 	
 	
-	<property name="src"		value="${basedir}/src" />
+	<property name="src"		value="src" />
+	<property name="src-jsp"	value="${src}/views" />
+	<property name="static"		value="static" />
+	<property name="lib"		value="lib" />
+	<property name="build"		value="build" />
+	<property name="classes"	value="${build}/classes" />
+	<property name="warfile"	value="${warfilename}.war" />
+	<property name="buildwar"	value="${build}/war" />
+	<property name="dist"		value="dist" />
+	<property name="conf"		value="conf" />
+	<property name="entete"		value="${binome}-TP${numero}_${matiere}" />
+	<property name="webpage"	value="${host}:${port}/${warfilename}/" />
+	<property name="doc" 		value="${build}/doc" />
+	
+	<!-- <property name="src"		value="${basedir}/src" />
 	<property name="src-jsp"	value="${src}/views" />
 	<property name="static"		value="${basedir}/static" />
 	<property name="lib"		value="${basedir}/lib" />
@@ -34,7 +48,7 @@
 	<property name="conf"		value="${basedir}/conf" />
 	<property name="entete"		value="${binome}-TP${numero}_${matiere}" />
 	<property name="webpage"	value="${host}:${port}/${warfilename}/" />
-	
+	 -->
 	<path id="classpath">
 		<pathelement location="${classes}" />
  		<fileset dir="${postgresql.home}">
@@ -207,13 +221,12 @@
 	<target name="doc" 
 			depends="prepare"
 			description="Génération de la documentation.">
-		<property name="doc.dir" value="${build}/doc" />
-		<mkdir dir="${doc.dir}" />
+		<mkdir dir="${doc}" />
 		<javadoc author="yes" 
 				version="yes" 
 				use="yes"
 				classpathref="classpath"
-            	destdir="${doc.dir}"
+            	destdir="${doc}"
             	private="true">
 			<fileset dir="${src}" includes="**/*.java" />
 		</javadoc>
@@ -243,16 +256,33 @@
 	-->
 	<target name="database"
 			description="Exécution des instructions SQL contenus dans le fichier ${sqlfile}.">
-		<java jar="${jonas.root}/lib/commons/jonas/hsqldb.jar"
-				fork="true"
-				failonerror="true">
-			<arg value="--autoCommit" />
-			<arg value="--continueOnErr" />
-			<arg value="--rcfile" />
-			<arg value="${rcfile}" />
-			<arg value="dbjonas" />
+		<exec executable="psql" >
+			<arg value="-d" />
+			<arg value="${database}" />
+			<arg value="-U" />
+			<arg value="${username}" />
+			<arg value="-f" />
 			<arg value="${sqlfile}" />
-		</java>
+			<arg value="-W" />
+			<redirector inputstring="${password}" />
+		</exec>
+	</target>
+	
+	<!--
+		========== HELP ==========
+	-->
+	<target name="help" description="Affichage de l'aide.">
+		<echo message="ant clean: Néttoie le répertoire de l'application: supprime les répertoires de compilation, de distribution et le fichier de déploiement." />
+		<echo message="ant compile: Compile les fichiers du répertoire source '${src}'." />
+		<echo message="ant database: Ne fonctionne pas." />
+		<echo message="ant deploy: Déploie l'application dans le répertoire de déploiement de Tomcat '${catalina.home}/webapps/'." />
+		<echo message="ant dist: Génère l'archive de distribution de l'application dans le répertoire de distribution '${dist}'." />
+		<echo message="ant doc: Génère la documentation du code (javadoc) dans le répertoire de documentation '${doc}'." />
+		<echo message="ant help: Affiche cet aide." />
+		<echo message="ant prepare: Crée la structure de répertoires '${build}' recevant les fichiers de compilation." />
+		<echo message="ant run: Lance la page principale de l'application spécifiée (ici: '${webpage}') dans le navigateur Web spécifié dans le fichier de propriétés (ici: '${browser}')" />
+		<echo message="ant undeploy: Annule le déploiement de l'application et supprime tous les fichiers et répertoires relatifs à l'application du répertoire de déploiement de Tomcat." />
+		<echo message="ant war: Crée le fichier war de déploiement '${warfile}'." />
 	</target>
 
 </project>
