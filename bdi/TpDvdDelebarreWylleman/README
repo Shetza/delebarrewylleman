@@ -1,9 +1,5 @@
-psql -d dvdthequeDelebarreWylleman -U lemeur -f database/scripts/delete.sql
+psql -d dvdthequeDelebarreWylleman -U lemeur -f database/scripts/general.sql
 password: lemeur
-
-psql -d postgres -U lemeur -f database/scripts/create.sql
-password: lemeur
-
 
 
 les dao create n'utilisent pas l'auto increment des tables
