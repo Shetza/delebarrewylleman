@@ -115,8 +115,8 @@ INSERT INTO avis VALUES(1, 1, 'MONUMENTAL!! Ce film restera pour moi le meilleur
 INSERT INTO avis VALUES(2, 1, 'Le meilleur volet de la trilogie des effets speciaux incroyable de tres bonne scene d\'action le film est exellent REGARDER LE');
 INSERT INTO avis VALUES(3, 1, 'Avec Matrix revolution, les frères Wachowski boucle de la plus belle manière qui soit, la plus excitante et philosophique saga de science fiction de l\'histoire du cinéma sous un déluge d\'effets spéciaux toujours plus spectaculaire.');
 
-INSERT INTO emprunts VALUES(3,2,'2006-12-06');
-INSERT INTO emprunts VALUES(7,2,'2006-11-20');
-INSERT INTO emprunts VALUES(8,2,'2006-12-03');
-INSERT INTO emprunts VALUES(9,1,'2006-12-04');
-INSERT INTO emprunts VALUES(10,1,'2006-11-05','2006-11-10');
+INSERT INTO emprunts VALUES(3,2,0,NULL,'2006-12-06');
+INSERT INTO emprunts VALUES(7,2,0,NULL,'2006-11-20');
+INSERT INTO emprunts VALUES(8,2,0,NULL,'2006-12-03');
+INSERT INTO emprunts VALUES(9,1,1,2,'2006-12-04');
+INSERT INTO emprunts VALUES(10,1,0,NULL,'2006-11-05','2006-11-10');
