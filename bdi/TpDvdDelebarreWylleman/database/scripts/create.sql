@@ -1,4 +1,4 @@
-﻿--
+--
 -- PostgreSQL database dump
 --
 
@@ -185,6 +185,8 @@ SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('dvds', 'id'), 1, fal
 CREATE TABLE emprunts (
     dvds_id integer NOT NULL,
     utilisateurs_id integer NOT NULL,
+	prolonge integer NOT NULL DEFAULT 0,
+	loueur_suivant_id integer,
 	date_emprunt date,
 	date_retour date
 );
