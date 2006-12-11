@@ -14,20 +14,13 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
 
-public class PostGreSQLDAOKind implements KindDAO {
+public class PostGreSQLDAOKind extends PostGreSQLModelDAO implements KindDAO {
 	
 	/* (non-Javadoc)
      * @see dao.business.KindDAO#create()
      */
 	public Model create() throws DAOException {
-		int key = PostGreSQLCommons.getGeneratedKey("categories");
-		
-		// On insert un nouvel enregistrement vide avec la clef generee.
-		String query = "INSERT INTO categories VALUES(" + key + ", NULL);" ;
-		int insertedRowNumber = PostGreSQLCommons.executeUpdate(query);
-		if ( insertedRowNumber != 1 ) throw new DAOException("Nombre d'enregistrement inserer non valide, creation annulee.");
-		
-		return new Kind(key);
+		return new Kind(super.create("categories", 1));
 	}
 	
 	/* (non-Javadoc)
@@ -51,15 +44,7 @@ public class PostGreSQLDAOKind implements KindDAO {
      * @see dao.business.KindDAO#getModelById(int)
      */
 	public Model getModelById(int id) throws DAOException {
-		String query = "SELECT * FROM categories WHERE id = " + id + ";" ;
-		List kinds = this.executeSelect(query);
-		
-		try {
-			if ( kinds != null ) return (Kind) kinds.get(0);
-			return null;
-		} catch (Exception e) {
-			throw new DAOException(e.toString());
-		}
+		return super.getModelById("categories", id);
 	}
 	
 	/* (non-Javadoc)
@@ -72,7 +57,10 @@ public class PostGreSQLDAOKind implements KindDAO {
 		return this.executeSelect(query);
 	}
 	
-	private List executeSelect(String query) throws DAOException {
+	/* (non-Javadoc)
+     * @see dao.postgresql.PostGreSQLModelDAO#executeSelect(String)
+     */
+	protected List executeSelect(String query) throws DAOException {
 		List result = new ArrayList();
 		
 		Statement st = PostGreSQLCommons.executeQuery(query);

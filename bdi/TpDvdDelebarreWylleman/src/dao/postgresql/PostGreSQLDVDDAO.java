@@ -17,20 +17,13 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
 
-public class PostGreSQLDVDDAO implements DVDDAO {
+public class PostGreSQLDVDDAO extends PostGreSQLModelDAO implements DVDDAO {
 	
 	/* (non-Javadoc)
      * @see dao.business.DVDDAO#create()
      */
 	public Model create() throws DAOException {
-		int key = PostGreSQLCommons.getGeneratedKey("dvds");
-		
-		// On insert un nouvel enregistrement vide avec la clef generee.
-		String query = "INSERT INTO dvds VALUES(" + key + ", NULL, NULL, NULL, NULL);" ;
-		int insertedRowNumber = PostGreSQLCommons.executeUpdate(query);
-		if ( insertedRowNumber != 1 ) throw new DAOException("Nombre d'enregistrement inserer non valide, creation annulee.");
-		
-		return new DVD(key);
+		return new DVD(super.create("dvds", 4));
 	}
 	
 	/* (non-Javadoc)
@@ -57,15 +50,7 @@ public class PostGreSQLDVDDAO implements DVDDAO {
      * @see dao.business.DVDDAO#getModelById(int)
      */
 	public Model getModelById(int id) throws DAOException {
-		String query = "SELECT * FROM dvds WHERE id = " + id + ";" ;
-		List dvds = this.executeSelect(query);
-		
-		try {
-			if ( dvds != null ) return (DVD) dvds.get(0);
-			return null;
-		} catch (Exception e) {
-			throw new DAOException(e.toString());
-		}
+		return super.getModelById("dvds", id);
 	}
 	
 	/* (non-Javadoc)
@@ -81,7 +66,10 @@ public class PostGreSQLDVDDAO implements DVDDAO {
 		return this.executeSelect(query);
 	}
 	
-	private List executeSelect(String query) throws DAOException {
+	/* (non-Javadoc)
+     * @see dao.postgresql.PostGreSQLModelDAO#executeSelect(String)
+     */
+	protected List executeSelect(String query) throws DAOException {
 		List result = new ArrayList();
 		
 		Statement st = PostGreSQLCommons.executeQuery(query);

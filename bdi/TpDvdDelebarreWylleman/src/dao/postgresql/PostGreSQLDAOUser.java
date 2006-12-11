@@ -14,20 +14,13 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
 
-public class PostGreSQLDAOUser implements UserDAO {
+public class PostGreSQLDAOUser extends PostGreSQLModelDAO implements UserDAO {
 	
 	/* (non-Javadoc)
      * @see dao.business.UserDAO#create()
      */
 	public Model create() throws DAOException {
-		int key = PostGreSQLCommons.getGeneratedKey("utilisateurs");
-		
-		// On insert un nouvel enregistrement vide avec la clef generee.
-		String query = "INSERT INTO utilisateurs VALUES(" + key + ", NULL, NULL, NULL, NULL);" ;
-		int insertedRowNumber = PostGreSQLCommons.executeUpdate(query);
-		if ( insertedRowNumber != 1 ) throw new DAOException("Nombre d'enregistrement inserer non valide, creation annulee.");
-		
-		return new User(key);
+		return new User(super.create("utilisateurs", 4));
 	}
 	
 	/* (non-Javadoc)
@@ -54,15 +47,7 @@ public class PostGreSQLDAOUser implements UserDAO {
      * @see dao.business.UserDAO#getModelById(int)
      */
 	public Model getModelById(int id) throws DAOException {
-		String query = "SELECT * FROM utilisateurs WHERE id = " + id + ";" ;
-		List users = this.executeSelect(query);
-		
-		try {
-			if ( users != null ) return (User) users.get(0);
-			return null;
-		} catch (Exception e) {
-			throw new DAOException(e.toString());
-		}
+		return super.getModelById("utilisateurs", id);
 	}
 	
 	/* (non-Javadoc)
@@ -91,7 +76,10 @@ public class PostGreSQLDAOUser implements UserDAO {
 		}
 	}
 	
-	private List executeSelect(String query) throws DAOException {
+	/* (non-Javadoc)
+     * @see dao.postgresql.PostGreSQLModelDAO#executeSelect(String)
+     */
+	protected List executeSelect(String query) throws DAOException {
 		List result = new ArrayList();
 		Statement st = PostGreSQLCommons.executeQuery(query);
 		try {
