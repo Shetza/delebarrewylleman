@@ -41,7 +41,7 @@ public abstract class PostGreSQLModelDAO {
 		
 		// On insert un nouvel enregistrement vide avec la clef generee.
 		String query = "INSERT INTO " + tableName + " VALUES(" + key ;
-		for ( int i=0; i<fieldsToNull; i++ ) query += ", NULL);" ;
+		for ( int i=0; i<fieldsToNull; i++ ) query += ", NULL" ;
 		query += ");" ;
 		int insertedRowNumber = PostGreSQLCommons.executeUpdate(query);
 		if ( insertedRowNumber != 1 ) throw new DAOException("Nombre d'enregistrement inserer non valide, creation annulee.");

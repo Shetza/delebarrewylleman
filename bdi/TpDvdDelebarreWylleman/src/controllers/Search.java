@@ -31,6 +31,7 @@ public class Search extends Controller {
 	}
 	
 	private void search(HttpServletRequest request, HttpServletResponse response, String title, String tempKind, String date) throws IOException, ServletException {
+		//String order = request.getParameter("order");
 		String source = request.getParameter("source");
 		String tempUser = request.getParameter("user");
 		try {			
@@ -40,7 +41,7 @@ public class Search extends Controller {
 			if (tempUser != null && !tempUser.equals("") ) userId = Integer.parseInt(tempUser);
 			
 			DVDDAO dvdDAO = factory.getDVDDAO();
-			List dvds = dvdDAO.search(userId, title, kindId, date);
+			List dvds = dvdDAO.search(userId, title, kindId, date, null);
 			
 			super.forward(source, "message", dvds, request, response);
 		}

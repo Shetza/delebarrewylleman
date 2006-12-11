@@ -68,7 +68,7 @@ public class Add extends Controller {
 				
 				dvdDAO.update(dvd);
 				
-				String message = "Le DVD <b>" + title + "</b> paru le <u>" + date + "</u> a bien &eacute;t&eacute; ajout&eacute; sous la cat&eacute;gorie <i>" + kind.getName() + "</i>.";
+				String message = "Le DVD <b>" + title + "</b> paru le <u>" + date + "</u> a bien &eacute;t&eacute; ajout&eacute; dans la cat&eacute;gorie <i>" + kind.getName() + "</i>.";
 				super.forward("", "message", message, request, response);
 			}
 		}

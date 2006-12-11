@@ -54,14 +54,15 @@ public class PostGreSQLDVDDAO extends PostGreSQLModelDAO implements DVDDAO {
 	}
 	
 	/* (non-Javadoc)
-     * @see dao.business.DVDDAO#search(int, String, int, String)
+     * @see dao.business.DVDDAO#search(int, String, int, String, String)
      */
-	public List search(int owner, String title, int kind, String date) throws DAOException {
+	public List search(int owner, String title, int kind, String date, String order) throws DAOException {
 		String query = "SELECT * FROM dvds WHERE TRUE" ;
 		if ( owner != -1 ) query += " AND utilisateurs_id = " + owner ;
 		if ( title != null ) query += " AND titre ~~ '%" + title + "%'" ;
 		if ( kind != -1 ) query += " AND categories_id = " + kind ;
 		if ( date != null ) query += " AND parution ~~ '%" + date + "%'" ;
+		if ( order != null ) query += " ORDER BY " + order ;
 		query += ";" ;
 		return this.executeSelect(query);
 	}

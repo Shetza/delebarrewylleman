@@ -38,7 +38,7 @@
 				<li><a href="view.jsp?action=add">Ajouter un DVD</a></li>
 				<li><a href="view.jsp?action=remove">Supprimer un DVD</a></li>
 				<li><a href="ControllerSearch?source=search">Rechercher un DVD</a></li>
-				<li><a href="ControllerSearch?user=<%= user.getId() %>&source=myDVDs">Mes DVDs</a></li>
+				<li><a href="ControllerSearch?source=myDVDs&user=<%= user.getId() %>">Mes DVDs</a></li>
 				<br>
 				<li><a href="view.jsp?action=tools">Outils</a></li>
 				<br>
@@ -67,9 +67,13 @@
 			String dvd = request.getParameter("dvd");
 			String filename = "/" + action + ".jsp";
 			if ( dvd != null )	filename += "?dvd=" + dvd;
+			try {
 			%>
 				<jsp:include page="<%= filename.toString() %>" flush="true" />
-			<%
+			<% 
+			} catch(Exception e) {
+				request.setAttribute("error", e.toString());
+			}
 		}
 	}
 	%>

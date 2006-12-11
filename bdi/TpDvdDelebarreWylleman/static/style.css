@@ -154,7 +154,7 @@ h1, h2, h3, h4 {
 #sidebar ul {
 	list-style-type: none;
 	padding: 5px 0px 5px 10px;
-	margin: 0;
+	margin: 0px 0px 10px 0px;
 	font-size: 0.8em;	
 	border:#E1D6c6 1px solid;
 	border-top:#f3f6ed 1px solid;

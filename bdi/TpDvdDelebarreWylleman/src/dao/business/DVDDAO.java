@@ -32,8 +32,9 @@ public interface DVDDAO extends ModelDAO {
 	 * @param title Le titre des dvds a chercher.
 	 * @param kind L'identifiant de la categorie des dvds a chercher.
 	 * @param date La date des dvds a chercher.
+	 * @param order L'ordre de trie dans la liste.
 	 * @return la liste des dvds (jamais <code>null</code>).
 	 */
-	public List search(int owner, String title, int kind, String date) throws DAOException;
+	public List search(int owner, String title, int kind, String date, String order) throws DAOException;
 	
 }
