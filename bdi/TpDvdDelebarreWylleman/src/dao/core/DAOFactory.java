@@ -44,22 +44,26 @@ public abstract class DAOFactory {
 		}
 	} */
 	
-	private Map daos;
+	//private Map daos;
 	
-	public DAOFactory() {
+	/* public DAOFactory() {
 		this.daos = new HashMap();
-	}
+	} */
 	
 	/* public static DAOFactory getDefaultFactory() {
 		return _instance;
 	} */
 	
-	protected void putDAO(String daoName, ModelDAO model) {
+	/* protected void putDAO(String daoName, ModelDAO model) {
 		this.daos.put(daoName, model);
 	}
 	
 	public ModelDAO getDAO(String daoName) {
 		return (ModelDAO) this.daos.get(daoName);
-	}
+	} */
+	
+	public abstract DVDDAO getDVDDAO();
+	public abstract KindDAO getKindDAO();
+	public abstract UserDAO getUserDAO();
 	
 }
