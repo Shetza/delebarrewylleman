@@ -1,6 +1,7 @@
 package dao.postgresql;
 
 import dao.core.DAOFactory;
+import dao.business.*;
 
 public class PostGreSQLDAOFactory extends DAOFactory {
 	

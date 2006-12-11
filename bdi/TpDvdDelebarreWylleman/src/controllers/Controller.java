@@ -49,7 +49,7 @@ public abstract class Controller extends HttpServlet {
 			List kinds = (List) context.getAttribute("kinds");
 			if ( kinds == null  ) {
 				System.out.println("Construction de la liste des categories en cours.");
-				KindDAO kindDAO = (KindDAO) factory.getDAO("kind");
+				KindDAO kindDAO = factory.getKindDAO();
 				kinds = kindDAO.search(null);
 				
 				if (kinds == null) throw new Exception("Boom - No kind");

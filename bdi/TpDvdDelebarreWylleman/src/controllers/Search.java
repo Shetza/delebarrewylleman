@@ -39,7 +39,7 @@ public class Search extends Controller {
 			int userId = -1;
 			if (tempUser != null && !tempUser.equals("") ) userId = Integer.parseInt(tempUser);
 			
-			DVDDAO dvdDAO = (DVDDAO) factory.getDAO("dvd");
+			DVDDAO dvdDAO = factory.getDVDDAO();
 			List dvds = dvdDAO.search(userId, title, kindId, date);
 			
 			super.forward(source, "message", dvds, request, response);

@@ -55,10 +55,10 @@ public class Add extends Controller {
 				date = Date.valueOf(tempDate);
 				kindId = Integer.parseInt(tempKind);
 				
-				DVDDAO dvdDAO = (DVDDAO) factory.getDAO("dvd");
+				DVDDAO dvdDAO = factory.getDVDDAO();
 				DVD dvd = (DVD) dvdDAO.create();
 				
-				KindDAO kindDAO = (KindDAO) factory.getDAO("kind");
+				KindDAO kindDAO = factory.getKindDAO();
 				Kind kind = (Kind) kindDAO.getModelById(kindId);
 				
 				dvd.setTitle(title);

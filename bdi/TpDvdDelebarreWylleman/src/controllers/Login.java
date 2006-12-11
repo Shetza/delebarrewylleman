@@ -39,7 +39,7 @@ public class Login extends Controller {
 				super.forward("login", "error", error, request, response);
 			}
 			else {
-				UserDAO userDAO = (UserDAO) factory.getDAO("user");
+				UserDAO userDAO = factory.getUserDAO();
 				User user = userDAO.getUserByLogin(login);
 				
 				if ( user == null || !user.getPassword().equals(pass) ) {
