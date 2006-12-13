@@ -1,4 +1,4 @@
---
+﻿--
 -- PostgreSQL database dump
 --
 
@@ -195,20 +195,6 @@ CREATE TABLE emprunts (
 ALTER TABLE public.emprunts OWNER TO lemeur;
 
 --
--- TOC entry 1199 (class 1259 OID 16431)
--- Dependencies: 4
--- Name: reserves; Type: TABLE; Schema: public; Owner: lemeur; Tablespace: 
---
-
-CREATE TABLE reserves (
-    dvds_id integer NOT NULL,
-    utilisateurs_id integer NOT NULL
-);
-
-
-ALTER TABLE public.reserves OWNER TO lemeur;
-
---
 -- TOC entry 1557 (class 0 OID 16423)
 -- Dependencies: 1195
 -- Data for Name: artistes; Type: TABLE DATA; Schema: public; Owner: lemeur
@@ -252,14 +238,6 @@ ALTER TABLE public.reserves OWNER TO lemeur;
 -- TOC entry 1560 (class 0 OID 16429)
 -- Dependencies: 1198
 -- Data for Name: emprunts; Type: TABLE DATA; Schema: public; Owner: lemeur
---
-
-
-
---
--- TOC entry 1561 (class 0 OID 16431)
--- Dependencies: 1199
--- Data for Name: reserves; Type: TABLE DATA; Schema: public; Owner: lemeur
 --
 
 
@@ -345,17 +323,7 @@ ALTER TABLE ONLY dvds
 --
 
 ALTER TABLE ONLY emprunts
-    ADD CONSTRAINT emprunts_pkey PRIMARY KEY (dvds_id, utilisateurs_id);
-
-
---
--- TOC entry 1544 (class 2606 OID 16523)
--- Dependencies: 1199 1199 1199
--- Name: reserves_pkey; Type: CONSTRAINT; Schema: public; Owner: lemeur; Tablespace: 
---
-
-ALTER TABLE ONLY reserves
-    ADD CONSTRAINT reserves_pkey PRIMARY KEY (dvds_id, utilisateurs_id);
+    ADD CONSTRAINT emprunts_pkey PRIMARY KEY (dvds_id, utilisateurs_id, date_emprunt);
 
 
 --
@@ -419,23 +387,13 @@ ALTER TABLE ONLY emprunts
 
 
 --
--- TOC entry 1551 (class 2606 OID 16512)
--- Dependencies: 1199 1196 1537
--- Name: reserves_dvds_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: lemeur
+-- TOC entry 1550 (class 2606 OID 16505)
+-- Dependencies: 1198 1193 1531
+-- Name: emprunts_utilisateurs_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: lemeur
 --
 
-ALTER TABLE ONLY reserves
-    ADD CONSTRAINT reserves_dvds_id_fkey FOREIGN KEY (dvds_id) REFERENCES dvds(id);
-
-
---
--- TOC entry 1552 (class 2606 OID 16517)
--- Dependencies: 1193 1531 1199
--- Name: reserves_utilisateurs_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: lemeur
---
-
-ALTER TABLE ONLY reserves
-    ADD CONSTRAINT reserves_utilisateurs_id_fkey FOREIGN KEY (utilisateurs_id) REFERENCES utilisateurs(id);
+ALTER TABLE ONLY emprunts
+    ADD CONSTRAINT emprunts_reserve_utilisateurs_id_fkey FOREIGN KEY (reserve_utilisateurs_id) REFERENCES utilisateurs(id);
 
 
 --
