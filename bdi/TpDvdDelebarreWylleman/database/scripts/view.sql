@@ -79,6 +79,25 @@ CREATE VIEW vue_emprunts
 		ve.date_rendu IS NULL;
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+CREATE VIEW vue_emprunts2
+	AS SELECT
+		u.id as utilisateurs_id,
+		d.id as dvds_id,
+		d.titre as dvds_titre,
+		e.date_emprunt as date_emprunt,
+		e.date_emprunt+15 as date_limite,
+		e.date_retour as date_retour,
+		e.prolonge as prolonge,
+		e.reserve_utilisateurs_id as reserve_utilisateurs_id
+	FROM
+		utilisateurs u,
+		dvds d,
+		emprunts e
+	WHERE
+		d.id = e.dvds_id
+	AND
+		u.id = e.utilisateurs_id;
+
 --------------------------------------------------------------------------------------------------------------------------------------------
 -- Vue vue_nombre_emprunts
 --

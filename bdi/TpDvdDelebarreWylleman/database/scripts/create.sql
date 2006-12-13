@@ -187,7 +187,7 @@ CREATE TABLE emprunts (
     utilisateurs_id integer NOT NULL,
 	date_emprunt date NOT NULL,
 	date_retour date,
-	prolonge integer NOT NULL DEFAULT 0,
+	prolonge integer,
 	loueur_suivant_id integer
 );
 

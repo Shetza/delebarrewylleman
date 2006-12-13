@@ -23,12 +23,28 @@ BEGIN
 END;
 $BODY$ LANGUAGE plpgsql ;
 
-CREATE OR TRIGGER  trigger_verifier_emprunts_max
-	AFTER INSERT OR UPDATE ON  emprunts FOR EACH ROW
-	EXECUTE PROCEDURE  fonction_verifier_emprunts_maximum();
+CREATE TRIGGER trigger_verifier_emprunts_max
+	AFTER INSERT OR UPDATE ON emprunts FOR EACH ROW
+	EXECUTE PROCEDURE fonction_verifier_emprunts_maximum();
 
 -----------------------------------------------------------------------------------------------------------
--- Trigger tesatnt la possiblilite d'un prolongement
+-- Trigger fixant la valeur 0 par defaut pour le champ prolonge
+-----------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION fonction_prolonge_0() returns TRIGGER AS $BODY$
+BEGIN
+	IF ( NEW.prolonge IS NULL OR NEW.prolonge < 0 ) THEN
+		NEW.prolonge = 0;
+	END IF;
+	RETURN NEW;
+END;
+$BODY$ LANGUAGE plpgsql ;
+
+CREATE TRIGGER trigger_prolonge_0
+	BEFORE INSERT OR UPDATE ON emprunts FOR EACH ROW
+	EXECUTE PROCEDURE fonction_prolonge_0();
+
+-----------------------------------------------------------------------------------------------------------
+-- Trigger testant la possiblilite d'un prolongement
 --		Leve une exception si l'emprunt a deja ete prolonge une fois
 -----------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION fonction_prolongement_possible() returns TRIGGER AS $BODY$
@@ -46,7 +62,7 @@ BEGIN
 END;
 $BODY$ LANGUAGE plpgsql ;
 
-CREATE TRIGGER  trigger_prolongement_possible
+CREATE TRIGGER trigger_prolongement_possible
 	BEFORE UPDATE ON emprunts FOR EACH ROW
 	EXECUTE PROCEDURE fonction_prolongement_possible();
 

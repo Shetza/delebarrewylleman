@@ -16,7 +16,6 @@ INSERT INTO categories VALUES(DEFAULT, 'Documentaire');
 INSERT INTO categories VALUES(DEFAULT, 'Drame');
 INSERT INTO categories VALUES(DEFAULT, 'Espionnage');
 INSERT INTO categories VALUES(DEFAULT, 'Fantastique');
-INSERT INTO categories VALUES(DEFAULT, 'Films et Spectacles musicaux');
 INSERT INTO categories VALUES(DEFAULT, 'Grands Classiques');
 INSERT INTO categories VALUES(DEFAULT, 'Guerre');
 INSERT INTO categories VALUES(DEFAULT, 'Historique');
@@ -31,13 +30,13 @@ INSERT INTO categories VALUES(DEFAULT, 'Humour');
 INSERT INTO categories VALUES(DEFAULT, 'Sports, Loisirs');
 INSERT INTO categories VALUES(DEFAULT, 'Super Héros');
 INSERT INTO categories VALUES(DEFAULT, 'Thriller');
-INSERT INTO categories VALUES (DEFAULT, 'Wu Xia Pian');
+INSERT INTO categories VALUES(DEFAULT, 'Wu Xia Pian');
 
 INSERT INTO dvds VALUES(1, 1, 1, 'The Matrix', '1999-06-23');
 INSERT INTO dvds VALUES(2, 1, 1, 'The Matrix Reloaded', '2003-05-16');
 INSERT INTO dvds VALUES(3, 1, 1, 'The Matrix Revolutions', '2003-11-05');
-INSERT INTO dvds VALUES(4, 2, 30, 'The Blade', '1991-06-03');
-INSERT INTO dvds VALUES(5, 2, 30, 'Seven Swords', '2005-10-10');
+INSERT INTO dvds VALUES(4, 2, 29, 'The Blade', '1991-06-03');
+INSERT INTO dvds VALUES(5, 2, 29, 'Seven Swords', '2005-10-10');
 INSERT INTO dvds VALUES(6, 2, 14, 'Vampires', '1998-07-05');
 INSERT INTO dvds VALUES(7, 3, 1, 'Ghosts of Mars', '2001-10-25');
 INSERT INTO dvds VALUES(8, 3, 1, 'New York 1997', '1987-01-05');
@@ -77,7 +76,6 @@ INSERT INTO dvds_has_artistes VALUES(5, 7);
 INSERT INTO artistes VALUES(8, 'John Carpenter', 'REALISATEUR');
 INSERT INTO dvds_has_artistes VALUES(7, 8);
 INSERT INTO dvds_has_artistes VALUES(8, 8);
-INSERT INTO dvds_has_artistes VALUES(8, 8);
 
 INSERT INTO artistes VALUES(9, 'James Woods', 'ACTEUR');
 INSERT INTO dvds_has_artistes VALUES(6, 9);
@@ -115,8 +113,8 @@ INSERT INTO avis VALUES(1, 1, 'MONUMENTAL!! Ce film restera pour moi le meilleur
 INSERT INTO avis VALUES(2, 1, 'Le meilleur volet de la trilogie des effets speciaux incroyable de tres bonne scene d\'action le film est exellent REGARDER LE');
 INSERT INTO avis VALUES(3, 1, 'Avec Matrix revolution, les frères Wachowski boucle de la plus belle manière qui soit, la plus excitante et philosophique saga de science fiction de l\'histoire du cinéma sous un déluge d\'effets spéciaux toujours plus spectaculaire.');
 
-INSERT INTO emprunts VALUES(3,2,0,NULL,'2006-12-06');
-INSERT INTO emprunts VALUES(7,2,0,NULL,'2006-11-20');
-INSERT INTO emprunts VALUES(8,2,0,NULL,'2006-12-03');
-INSERT INTO emprunts VALUES(9,1,1,2,'2006-12-04');
-INSERT INTO emprunts VALUES(10,1,0,NULL,'2006-11-05','2006-11-10');
+INSERT INTO emprunts VALUES(7,2,'2006-12-06', NULL, NULL, NULL);
+INSERT INTO emprunts VALUES(3,2,'2006-11-20', NULL, NULL, NULL);
+INSERT INTO emprunts VALUES(8,2,'2006-12-03', NULL, NULL, NULL);
+INSERT INTO emprunts VALUES(9,1,'2006-12-04', NULL, NULL, NULL);
+INSERT INTO emprunts VALUES(10,1,'2006-11-05','2006-11-10', NULL, NULL);
