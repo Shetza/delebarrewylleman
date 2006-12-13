@@ -11,7 +11,7 @@ public interface ModelDAO {
 	 * Lance une exception de type <code>DAOException</code> si une erreur survient.
 	 * @return l'objet <code>Model</code> cree (jamais <code>null</code>).
 	 */
-	public Model create() throws DAOException;
+	//public Model create() throws DAOException;
 		
 	/**
 	 * Met a jour l'objet <code>Model</code> passe en parametre.
