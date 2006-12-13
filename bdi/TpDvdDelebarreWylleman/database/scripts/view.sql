@@ -88,7 +88,7 @@ CREATE VIEW vue_emprunts2
 		e.date_emprunt+15 as date_limite,
 		e.date_retour as date_retour,
 		e.prolonge as prolonge,
-		e.reserve_utilisateurs_id as reserve_utilisateurs_id
+		e.loueur_suivant_id as reserve_utilisateurs_id
 	FROM
 		utilisateurs u,
 		dvds d,
