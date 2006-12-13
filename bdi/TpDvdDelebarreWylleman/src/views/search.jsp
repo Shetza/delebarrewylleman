@@ -1,6 +1,7 @@
 <form method="POST" action="ControllerSearch"> 
 	<% 
 	java.util.List kinds = (java.util.List) application.getAttribute("kinds");
+	models.User user = (models.User) application.getAttribute("user");
 	%>
 	<h3>Rechercher un DVD</h3>
 	<table style="width: 100%;">
@@ -52,13 +53,11 @@
 			</tr>
 		</thead>
 		<% 
-		// AU LIEU DE METTRE LE NOM DES COLONNES A LA MAIN
-		// LES ECRIRES EN TEMPS QUE 1ERE LIGNE DE LA LISTE DE DVDS.
-		// AINSI ON POURRAI AJOUTER DES COLONNES SUIVANT LA REQUETE
-		// SANS CHANGER CETTE VUE...
-		java.util.List dvds = (java.util.List) request.getAttribute("message");
-		request.removeAttribute("message");
-		if ( dvds.isEmpty() ) {
+		java.util.List dvds = (java.util.List) request.getAttribute("dvds");
+		request.removeAttribute("dvds");
+		if ( dvds == null ) {
+		}
+		else if ( dvds.isEmpty() ) {
 			out.write("</table>\n<ul>\nAucun dvd n'a &eacute;t&eacute; trouv&eacute;.\n</ul>\n");
 		}
 		else {
@@ -67,16 +66,36 @@
 			<% 
 			dao.core.DAOFactory factory = (dao.core.DAOFactory) application.getAttribute("factory");
 			dao.business.KindDAO kindDAO = factory.getKindDAO();
+			dao.business.LoanDAO loanDAO = factory.getLoanDAO();
 			
 			for ( java.util.Iterator it = dvds.iterator(); it.hasNext(); ) {
 				models.DVD currentDVD = (models.DVD) it.next();
-				models.Kind currentKind = (models.Kind) kindDAO.getModelById(currentDVD.getKind());
+				models.Kind currentKind = kindDAO.getKindById(currentDVD.getKind());
 				%>
 		<tr>
-			<td style="text-align:left;"><% out.write(currentDVD.getTitle()); %></td>
-			<td style="text-align:left;"><% out.write(currentKind.getName()); %></td>
-			<td style="text-align:left;"><% out.write(currentDVD.getDate().toString()); %></td>
-			<td style="text-align:left;">Reserver/Emprunter/Rendre/Prolonger/Details</td>
+			<td style="text-align:left;"><%= currentDVD.getTitle() %></td>
+			<td style="text-align:left;"><%= currentKind.getName() %></td>
+			<td style="text-align:left;"><%= currentDVD.getDate().toString() %></td>
+			<td style="text-align:left;">
+				<% 
+				// Si le DVD est actuellement disponible a l'emprunt
+				// et si l'utilisateur peut encore emprunter des DVDs.
+				if ( loanDAO.isBorrowable(currentDVD) && loanDAO.canBorrow(user) ) {
+				%>
+				<a href="ControllerBorrow?dvdId=<%= currentDVD.getId() %>" onclick="return confirm('&Ecirc;tes-vous s&ucirc;r de vouloir emprunter le DVD <%= currentDVD.getTitle() %> ?')">emprunter</a>
+				<% 
+				}
+				// Si le DVD est actuellement disponible a la reserve
+				// et si l'utilisateur peut encore reserver des DVDs
+				// et si l'utilisateur peut reserver ce DVD (s'il ne l'a pas emprunte).
+				if ( loanDAO.isReservable(currentDVD) && loanDAO.canReserve(user) && loanDAO.canReserve(currentDVD, user) ) {
+				%>
+				<a href="ControllerReserve?dvdId=<%= currentDVD.getId() %>" onclick="return confirm('&Ecirc;tes-vous s&ucirc;r de vouloir r&eacute;server le DVD <%= currentDVD.getTitle() %> ?')">r&eacute;server</a>
+				<% 
+				}
+				%>
+				<a href="view.jsp?action=details&dvdId=<%= currentDVD.getId() %>">D&eacute;tails</a>
+			</td>
 		</tr>
 				<% 
 			}
@@ -86,4 +105,13 @@
 			<% 
 		}
 		%>
+</form>
+
+<form>
+	<ul>
+		<li>Vous ne pouvez pas emprunter un DVD? Il est surement d&eacute;ja emprunt&eacute; par un autre utilisateur ou vous l'avez d&eacute;ja emprunt&eacute; aujourd'hui.</li>
+		<li>Vous ne pouvez pas r&eacute;server un DVD? Il est surement d&eacute;ja r&eacute;serv&eacute; par un autre utilisateur ou vous l'avez actuellement emprunt&eacute;.</li>
+		<li>Vous ne pouvez emprunter <b>aucun</b> DVD? Vous devez surement avoir atteint votre limite d'emprunt de <b>3</b> DVDs.</li>
+		<li>Vous ne pouvez r&eacute;server <b>aucun</b> DVD? Vous devez surement avoir atteint votre limite de r&eacute;serve de <b>3</b> DVDs.</li>
+	</ul>
 </form>

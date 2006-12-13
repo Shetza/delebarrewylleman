@@ -35,10 +35,10 @@
 				%>
 				<li><a href="ControllerLogout"><b>Se d&eacute;connecter</b></a></li>
 				<br>
-				<li><a href="view.jsp?action=add">Ajouter un DVD</a></li>
-				<li><a href="view.jsp?action=remove">Supprimer un DVD</a></li>
-				<li><a href="ControllerSearch?source=search">Rechercher un DVD</a></li>
-				<li><a href="ControllerSearch?source=myDVDs&user=<%= user.getId() %>">Mes DVDs</a></li>
+				<!-- <li><a href="view.jsp?action=add">Ajouter un DVD</a></li>
+				<li><a href="view.jsp?action=remove">Supprimer un DVD</a></li> -->
+				<li><a href="ControllerSearch">Rechercher un DVD</a></li>
+				<li><a href="view.jsp?action=myDVDs">Mes DVDs</a></li>
 				<br>
 				<li><a href="view.jsp?action=tools">Outils</a></li>
 				<br>
