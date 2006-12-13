@@ -1,28 +1,35 @@
 package dao.business;
 
 import dao.core.DAOException;
-import dao.core.ModelDAO;
 
-import models.Model;
+import models.DVD;
 
 import java.util.List;
 
-public interface DVDDAO extends ModelDAO {
+public interface DVDDAO {
 	
-	/* (non-Javadoc)
-     * @see dao.core.ModelDAO#create()
-     */
-	public Model create() throws DAOException;
+	/**
+	 * Cree et renvoir un nouvel objet metier de type <code>DVD</code>.
+	 * Lance une exception de type <code>DAOException</code> si une erreur survient.
+	 * @return l'objet <code>DVD</code> cree (jamais <code>null</code>).
+	 */
+	public DVD create() throws DAOException;
 		
-	/* (non-Javadoc)
-     * @see dao.core.ModelDAO#update(models.Model)
-     */
-	public void update(Model model) throws DAOException;
+	/**
+	 * Met a jour l'objet <code>DVD</code> passe en parametre.
+	 * Lance une exception de type <code>DAOException</code> si une erreur survient.
+	 * @param dvd Le l'objet <code>DVD</code> a mettre a jour.
+	 */
+	public void update(DVD dvd) throws DAOException;
 		
-	/* (non-Javadoc)
-     * @see dao.core.ModelDAO#getModelById(int)
-     */
-	public Model getModelById(int id) throws DAOException;
+	/**
+	 * Renvoie l'objet metier <code>DVD</code> associe a l'identifiant passe en parametre.
+	 * Renvoie <code>null</code> si l'identifiant n'existe pas.
+	 * Lance une exception de type <code>DAOException</code> si une erreur survient.
+	 * @param id l'identifiant de l'objet a renvoyer.
+	 * @return l'objet <code>DVD</code> associe a l'identifiant.
+	 */
+	public DVD getDVDById(int id) throws DAOException;
 	
 	/**
 	 * Cherche et renvoie le liste de tous les dvds satisfaisants les criteres passes en parametre.
@@ -36,5 +43,13 @@ public interface DVDDAO extends ModelDAO {
 	 * @return la liste des dvds (jamais <code>null</code>).
 	 */
 	public List search(int owner, String title, int kind, String date, String order) throws DAOException;
+		
+	/**
+	 * Renvoie la liste des artistes qui ont participe au DVD passe en parametre.
+	 * Lance une exception de type <code>DAOException</code> si une erreur survient.
+	 * @param dvd Le DVD a rechercher dans la base de DVDs.
+	 * @return la liste des Artistes (jamais <code>null</code>).
+	 */
+	public List getArtists(DVD dvd) throws DAOException;
 	
 }

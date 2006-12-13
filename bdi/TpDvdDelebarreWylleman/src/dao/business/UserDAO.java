@@ -1,29 +1,35 @@
 package dao.business;
 
 import dao.core.DAOException;
-import dao.core.ModelDAO;
 
 import models.User;
-import models.Model;
 
 import java.util.List;
 
-public interface UserDAO extends ModelDAO {
+public interface UserDAO {
 	
-	/* (non-Javadoc)
-     * @see dao.core.ModelDAO#create()
-     */
-	public Model create() throws DAOException;
+	/**
+	 * Cree et renvoir un nouvel objet metier de type <code>User</code>.
+	 * Lance une exception de type <code>DAOException</code> si une erreur survient.
+	 * @return l'objet <code>User</code> cree (jamais <code>null</code>).
+	 */
+	public User create() throws DAOException;
 		
-	/* (non-Javadoc)
-     * @see dao.core.ModelDAO#update(models.Model)
-     */
-	public void update(Model model) throws DAOException;
+	/**
+	 * Met a jour l'objet <code>User</code> passe en parametre.
+	 * Lance une exception de type <code>DAOException</code> si une erreur survient.
+	 * @param user Le l'objet <code>User</code> a mettre a jour.
+	 */
+	public void update(User user) throws DAOException;
 		
-	/* (non-Javadoc)
-     * @see dao.core.ModelDAO#getModelById(int)
-     */
-	public Model getModelById(int id) throws DAOException;
+	/**
+	 * Renvoie l'objet metier <code>User</code> associe a l'identifiant passe en parametre.
+	 * Renvoie <code>null</code> si l'identifiant n'existe pas.
+	 * Lance une exception de type <code>DAOException</code> si une erreur survient.
+	 * @param id l'identifiant de l'objet a renvoyer.
+	 * @return l'objet <code>User</code> associe a l'identifiant.
+	 */
+	public User getUserById(int id) throws DAOException;
 	
 	/**
 	 * Renvoie l'objet <code>User</code> associe au login passe en parametre.
@@ -44,4 +50,5 @@ public interface UserDAO extends ModelDAO {
 	 * @return la liste des utilisateurs (jamais <code>null</code>).
 	 */
 	public List search(String lastName, String firstName, String login) throws DAOException;
+	
 }
