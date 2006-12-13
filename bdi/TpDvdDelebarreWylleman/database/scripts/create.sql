@@ -185,10 +185,10 @@ SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('dvds', 'id'), 1, fal
 CREATE TABLE emprunts (
     dvds_id integer NOT NULL,
     utilisateurs_id integer NOT NULL,
+	date_emprunt date NOT NULL,
+	date_retour date,
 	prolonge integer NOT NULL DEFAULT 0,
-	loueur_suivant_id integer,
-	date_emprunt date,
-	date_retour date
+	loueur_suivant_id integer
 );
 
 
@@ -393,7 +393,7 @@ ALTER TABLE ONLY emprunts
 --
 
 ALTER TABLE ONLY emprunts
-    ADD CONSTRAINT emprunts_reserve_utilisateurs_id_fkey FOREIGN KEY (reserve_utilisateurs_id) REFERENCES utilisateurs(id);
+    ADD CONSTRAINT emprunts_loueur_suivant_id_fkey FOREIGN KEY (loueur_suivant_id) REFERENCES utilisateurs(id);
 
 
 --
