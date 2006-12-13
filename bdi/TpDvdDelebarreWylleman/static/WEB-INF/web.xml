@@ -83,5 +83,75 @@
 		<servlet-name>ControllerSearch</servlet-name>
 		<url-pattern>/ControllerSearch</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ControllerBorrow</servlet-name>
+		<servlet-class>controllers.Borrow</servlet-class>
+	</servlet>
+	
+    <servlet-mapping>
+		<servlet-name>ControllerBorrow</servlet-name>
+		<url-pattern>/ControllerBorrow</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ControllerGiveBack</servlet-name>
+		<servlet-class>controllers.GiveBack</servlet-class>
+	</servlet>
+	
+    <servlet-mapping>
+		<servlet-name>ControllerGiveBack</servlet-name>
+		<url-pattern>/ControllerGiveBack</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ControllerReserve</servlet-name>
+		<servlet-class>controllers.Reserve</servlet-class>
+	</servlet>
+	
+    <servlet-mapping>
+		<servlet-name>ControllerReserve</servlet-name>
+		<url-pattern>/ControllerReserve</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ControllerCancelReserve</servlet-name>
+		<servlet-class>controllers.CancelReserve</servlet-class>
+	</servlet>
+	
+    <servlet-mapping>
+		<servlet-name>ControllerCancelReserve</servlet-name>
+		<url-pattern>/ControllerCancelReserve</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ControllerAddOpinion</servlet-name>
+		<servlet-class>controllers.AddOpinion</servlet-class>
+	</servlet>
+	
+    <servlet-mapping>
+		<servlet-name>ControllerAddOpinion</servlet-name>
+		<url-pattern>/ControllerAddOpinion</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ControllerModifyOpinion</servlet-name>
+		<servlet-class>controllers.ModifyOpinion</servlet-class>
+	</servlet>
+	
+    <servlet-mapping>
+		<servlet-name>ControllerModifyOpinion</servlet-name>
+		<url-pattern>/ControllerModifyOpinion</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ControllerDeleteOpinion</servlet-name>
+		<servlet-class>controllers.DeleteOpinion</servlet-class>
+	</servlet>
+	
+    <servlet-mapping>
+		<servlet-name>ControllerDeleteOpinion</servlet-name>
+		<url-pattern>/ControllerDeleteOpinion</url-pattern>
+	</servlet-mapping>
 
 </web-app>
