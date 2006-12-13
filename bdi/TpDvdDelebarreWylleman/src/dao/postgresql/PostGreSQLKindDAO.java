@@ -3,8 +3,8 @@ package dao.postgresql;
 import dao.business.KindDAO;
 import dao.core.DAOException;
 
-import models.Model;
 import models.Kind;
+import models.Model;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,21 +14,20 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
 
-public class PostGreSQLDAOKind extends PostGreSQLModelDAO implements KindDAO {
+public class PostGreSQLKindDAO extends PostGreSQLModelDAO implements KindDAO {
 	
 	/* (non-Javadoc)
      * @see dao.business.KindDAO#create()
      */
-	public Model create() throws DAOException {
+	public Kind create() throws DAOException {
 		return new Kind(super.create("categories", 1));
 	}
 	
 	/* (non-Javadoc)
-     * @see dao.business.KindDAO#update(models.Model)
+     * @see dao.business.KindDAO#update(models.Kind)
      */
-	public void update(Model model) throws DAOException {
+	public void update(Kind kind) throws DAOException {
 		try {
-			Kind kind = (Kind) model;
 			String query = "UPDATE categories" + 
 			" SET nom = '" + kind.getName() + "'" + 
 			" WHERE id = " + kind.getId() + ";" ;
@@ -41,10 +40,11 @@ public class PostGreSQLDAOKind extends PostGreSQLModelDAO implements KindDAO {
 	}
 	
 	/* (non-Javadoc)
-     * @see dao.business.KindDAO#getModelById(int)
+     * @see dao.business.KindDAO#getKindById(int)
      */
-	public Model getModelById(int id) throws DAOException {
-		return super.getModelById("categories", id);
+	public Kind getKindById(int id) throws DAOException {
+		String query = "SELECT * FROM categories WHERE id = " + id + ";" ;
+		return (Kind) super.getModelById(query);
 	}
 	
 	/* (non-Javadoc)
@@ -60,7 +60,7 @@ public class PostGreSQLDAOKind extends PostGreSQLModelDAO implements KindDAO {
 	/* (non-Javadoc)
      * @see dao.postgresql.PostGreSQLModelDAO#executeSelect(String)
      */
-	protected List executeSelect(String query) throws DAOException {
+	/* protected List executeSelect(String query) throws DAOException {
 		List result = new ArrayList();
 		
 		Statement st = PostGreSQLCommons.executeQuery(query);
@@ -80,6 +80,15 @@ public class PostGreSQLDAOKind extends PostGreSQLModelDAO implements KindDAO {
 			PostGreSQLCommons.close(st);
 			throw new DAOException(e.toString());
 		}
+	} */
+	
+	/* (non-Javadoc)
+     * @see dao.postgresql.PostGreSQLModelDAO#getModelByResultSet(java.sql.ResultSet)
+     */
+	protected Model getModelByResultSet(ResultSet rs) throws SQLException {
+		Kind kind = new Kind(rs.getInt("id"));
+		kind.setName(rs.getString("nom"));
+		return kind;
 	}
 	
 }

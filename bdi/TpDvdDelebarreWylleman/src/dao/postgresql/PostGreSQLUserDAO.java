@@ -3,8 +3,8 @@ package dao.postgresql;
 import dao.business.UserDAO;
 import dao.core.DAOException;
 
-import models.Model;
 import models.User;
+import models.Model;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,21 +14,20 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
 
-public class PostGreSQLDAOUser extends PostGreSQLModelDAO implements UserDAO {
+public class PostGreSQLUserDAO extends PostGreSQLModelDAO implements UserDAO {
 	
 	/* (non-Javadoc)
      * @see dao.business.UserDAO#create()
      */
-	public Model create() throws DAOException {
+	public User create() throws DAOException {
 		return new User(super.create("utilisateurs", 4));
 	}
 	
 	/* (non-Javadoc)
-     * @see dao.business.UserDAO#update(models.Model)
+     * @see dao.business.UserDAO#update(models.User)
      */
-	public void update(Model model) throws DAOException {
+	public void update(User user) throws DAOException {
 		try {
-			User user = (User) model;
 			String query = "UPDATE utilisateurs" + 
 			" SET nom = '" + user.getLastName() + "'" + 
 			" SET prenom = '" + user.getFirstName() + "'" + 
@@ -44,10 +43,11 @@ public class PostGreSQLDAOUser extends PostGreSQLModelDAO implements UserDAO {
 	}
 	
 	/* (non-Javadoc)
-     * @see dao.business.UserDAO#getModelById(int)
+     * @see dao.business.UserDAO#getUserById(int)
      */
-	public Model getModelById(int id) throws DAOException {
-		return super.getModelById("utilisateurs", id);
+	public User getUserById(int id) throws DAOException {
+		String query = "SELECT * FROM utilisateurs WHERE id = " + id + ";" ;
+		return (User) super.getModelById(query);
 	}
 	
 	/* (non-Javadoc)
@@ -69,8 +69,8 @@ public class PostGreSQLDAOUser extends PostGreSQLModelDAO implements UserDAO {
 		String query = "SELECT * FROM utilisateurs WHERE login = '" + login + "';" ;
 		List users = this.executeSelect(query);
 		try {
-			if ( users != null ) return (User) users.get(0);
-			return null;
+			if ( users.isEmpty() ) return null;
+			return (User) users.get(0);
 		} catch (Exception e) {
 			throw new DAOException(e.toString());
 		}
@@ -79,7 +79,7 @@ public class PostGreSQLDAOUser extends PostGreSQLModelDAO implements UserDAO {
 	/* (non-Javadoc)
      * @see dao.postgresql.PostGreSQLModelDAO#executeSelect(String)
      */
-	protected List executeSelect(String query) throws DAOException {
+	/* protected List executeSelect(String query) throws DAOException {
 		List result = new ArrayList();
 		Statement st = PostGreSQLCommons.executeQuery(query);
 		try {
@@ -100,6 +100,18 @@ public class PostGreSQLDAOUser extends PostGreSQLModelDAO implements UserDAO {
 			PostGreSQLCommons.close(st);
 			throw new DAOException(e.toString());
 		}
+	} */
+	
+	/* (non-Javadoc)
+     * @see dao.postgresql.PostGreSQLModelDAO#getModelByResultSet(java.sql.ResultSet)
+     */
+	protected Model getModelByResultSet(ResultSet rs) throws SQLException {
+		User user = new User(rs.getInt("id"));
+		user.setLastName(rs.getString("nom"));
+		user.setFirstName(rs.getString("prenom"));
+		user.setLogin(rs.getString("login"));
+		user.setPassword(rs.getString("password"));
+		return user;
 	}
 	
 }

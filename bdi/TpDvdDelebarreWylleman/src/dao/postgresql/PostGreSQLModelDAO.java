@@ -1,10 +1,8 @@
 package dao.postgresql;
 
-import dao.business.KindDAO;
 import dao.core.DAOException;
 
 import models.Model;
-import models.Kind;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -50,36 +48,58 @@ public abstract class PostGreSQLModelDAO {
 	}
 	
 	/**
-	 * Renvoie l'objet metier <code>Model</code> associe a l'identifiant passe en parametre.
-	 * Renvoie <code>null</code> si l'identifiant n'existe pas.
-	 * Lance une exception de type <code>DAOException</code> si une erreur survient.
+	 * Renvoie l'objet metier <code>Model</code> associe a la requete passee en parametre.
+	 * Renvoie <code>null</code> si la requete n'a generee aucun objet.
+	 * Lance une exception de type <code>DAOException</code> si plusieurs objets sont recuperes par la requete ou si une erreur survient.
 	 * Note: Chaque demande est stockee avec son resultat correspondant (existant ou non)
 	 * afin d'augmenter la rapidite en evitant plusieurs recherche similaires.
-	 * @param tableName Le nom de la table dans laquelle rechercher le <code>Model</code>.
-	 * @param id l'identifiant de l'objet a renvoyer.
-	 * @return l'objet <code>Model</code> associe a l'identifiant.
+	 * @param query La requete a executer pour rechercher le <code>Model</code>.
+	 * @return l'objet <code>Model</code> associe a l'identifiant ou <code>null</code>.
 	 */
-	public Model getModelById(String tableName, int id) throws DAOException {
-		Integer ObjectId = new Integer(id);
-		if ( this.history.containsKey(ObjectId) ) return (Model) this.history.get(ObjectId);
-		String query = "SELECT * FROM " + tableName + " WHERE id = " + id + ";" ;
+	public Model getModelById(String query) throws DAOException {
+		if ( this.history.containsKey(query) ) return (Model) this.history.get(query);
 		List results = this.executeSelect(query);
 		
+		if ( results.size() > 1 ) throw new DAOException("Nombre d'enregistrement non valide, recuperation annulee.");
+		
+		Model result = null;
+		if ( ! results.isEmpty() ) result = (Model) results.get(0);
+		this.history.put(query, result);
+		return result;
+	}
+	
+	/**
+	 * Cree et renvoie une liste d'objet metier <code>Model</code> a partir de l'execution de la requete SQL passee en parametre.
+	 * Lance une exception de type <code>DAOException</code> si une erreur survient.
+	 * @param query La requete SQL a executer.
+	 * @result La liste de <code>Model</code> creee a partir de l'execution de la requete (jamais <code>null</code>).
+	 */
+	protected List executeSelect(String query) throws DAOException {
+		List result = new ArrayList();
+		
+		Statement st = PostGreSQLCommons.executeQuery(query);
+		
 		try {
-			Model result = null;
-			if ( results != null ) result = (Model) results.get(0);
-			this.history.put(ObjectId, result);
+			ResultSet rs = st.getResultSet();
+			while ( rs.next() ) {
+				result.add(this.getModelByResultSet(rs));
+			}
+			rs.close();
+			PostGreSQLCommons.close(st);
+			
 			return result;
-		} catch (Exception e) {
+		} catch (SQLException e) {
+			PostGreSQLCommons.close(st);
 			throw new DAOException(e.toString());
 		}
 	}
 	
 	/**
-	 * Cree et renvoie un liste de resultats a partir de l'execution de la requete SQL passee en parametre.
-	 * @param query La requete SQL a executer.
-	 * @result La liste de <code>Model</code> creee a partir de l'execution de la requete.
+	 * Renvoie un objet metier <code>Model</code> a partir du <code>ResultSet</code> passe en parametre.
+	 * Lance une exception de type <code>SQLException</code> si une erreur survient.
+	 * @param rs Le <code>ResultSet</code> duquel extraire l'objet <code>Model</code> a renvoyer.
+	 * @result L'objet <code>Model</code> creee a partir du <code>ResultSet</code> (jamais <code>null</code>).
 	 */
-	protected abstract List<Model> executeSelect(String query) throws DAOException;
+	protected abstract Model getModelByResultSet(ResultSet rs) throws SQLException ;
 	
 }

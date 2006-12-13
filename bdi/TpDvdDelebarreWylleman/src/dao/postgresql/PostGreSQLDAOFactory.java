@@ -17,11 +17,19 @@ public class PostGreSQLDAOFactory extends DAOFactory {
 	}
 	
 	public KindDAO getKindDAO() {
-		return new PostGreSQLDAOKind();
+		return new PostGreSQLKindDAO();
 	}
 	
 	public UserDAO getUserDAO() {
-		return new PostGreSQLDAOUser();
+		return new PostGreSQLUserDAO();
+	}
+	
+	public LoanDAO getLoanDAO() {
+		return new PostGreSQLLoanDAO();
+	}
+	
+	public OpinionDAO getOpinionDAO() {
+		return new PostGreSQLOpinionDAO();
 	}
 	
 }
