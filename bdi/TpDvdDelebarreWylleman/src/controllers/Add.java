@@ -28,7 +28,7 @@ public class Add extends Controller {
 	}
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		int kindId = -1;
+		int kindId = 0;
 		String title = null;
 		Date date = null;
 		
@@ -59,7 +59,7 @@ public class Add extends Controller {
 				DVD dvd = (DVD) dvdDAO.create();
 				
 				KindDAO kindDAO = factory.getKindDAO();
-				Kind kind = (Kind) kindDAO.getModelById(kindId);
+				Kind kind = kindDAO.getKindById(kindId);
 				
 				dvd.setTitle(title);
 				dvd.setKind(kindId);

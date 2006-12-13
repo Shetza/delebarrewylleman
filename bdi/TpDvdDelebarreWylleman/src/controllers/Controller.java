@@ -75,5 +75,14 @@ public abstract class Controller extends HttpServlet {
 		request.setAttribute(type, message);
 		request.getRequestDispatcher("/view.jsp?action="+source+"&name="+name).forward(request, response);
 	}
+	
+	protected String protectString(String str) {
+		String result = "";
+		for ( int i=0; i<str.length(); i++ ) {
+			if ( str.charAt(i) == '\'' || str.charAt(i) == '\\' ) result += '\\';
+			result += str.charAt(i);
+		}
+		return result;
+	}
 }
 
