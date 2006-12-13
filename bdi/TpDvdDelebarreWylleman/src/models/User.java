@@ -1,18 +1,27 @@
 package models;
 
-public class User extends AModel {
+public class User implements Model {
 	
+	private final int id;
 	private String lastName;
 	private String firstName;
 	private String login;
 	private String password;
 	
 	public User(int id) {
-		super(id);
+		this.id = id;
 		this.lastName = null;
 		this.firstName = null;
 		this.login = null;
 		this.password = null;
+	}
+	
+	public String toString() {
+		return this.firstName + " " + this.lastName;
+	}
+	
+	public int getId() {
+		return this.id;
 	}
 	
 	public String getLastName() {

@@ -1,20 +1,29 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
 
-public class DVD extends AModel {
+public class DVD implements Model {
 	
+	private final int id;
 	private int user;
 	private int kind;
 	private String title;
 	private Date date;
 	
+	private List artists;
+	
 	public DVD(int id) {
-		super(id);
-		this.user = -1;
-		this.kind = -1;
+		this.id = id;
+		this.user = 0;
+		this.kind = 0;
 		this.title = null;
 		this.date = null;
+		this.artists = null;
+	}
+	
+	public int getId() {
+		return this.id;
 	}
 	
 	public String getTitle() {
@@ -47,6 +56,14 @@ public class DVD extends AModel {
 	
 	public void setUser(int user) {
 		this.user = user;
+	}
+	
+	public List getArtists() {
+		return this.artists;
+	}
+	
+	public void setArtists(List artists) {
+		this.artists = artists;
 	}
 	
 }
