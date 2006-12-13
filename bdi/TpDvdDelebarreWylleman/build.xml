@@ -105,6 +105,7 @@
 				encoding="utf-8"
 				debug="on">
       		<include name="**/*.java" />
+      		<exclude name="**/UNUSED/*.java" />
 			<!-- <compilerarg value="-Xlint"/> -->
 		</javac>
 	</target>

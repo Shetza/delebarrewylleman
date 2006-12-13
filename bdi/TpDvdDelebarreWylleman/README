@@ -1,4 +1,4 @@
-psql -d dvdthequeDelebarreWylleman -U lemeur -f database/scripts/general.sql
+psql -d postgres -U lemeur -f database/scripts/general.sql
 password: lemeur
 
 
@@ -25,10 +25,23 @@ qui devait exsiter. Ce qui revenait a mettre null.
 PostGreSQLCommons gère le pool de connexion et se preoccupe
 de distribuer les connexions au divers DAO.
 
-Chaque DAO s'occupe de recuperer une connexion, 
-d'en gerer le cycle de vie et d'effectuer commit et rollback.
+Un objet commun (PostGreSQLCommons) s'occupe de recuperer 
+une connexion, d'en gerer le cycle de vie et d'effectuer 
+commit et rollback afin de liberer les DAO de ces contraintes.
 
 La liste des categories est calculee une fois pour toute,
 a l'initialisation. De toutes facon, il est impossible d'ajouter
 une nouvelle categories par l'application.
 Si une nouvelle categories est ajoutee, relancer l'application.
+
+Des triggers empechent les utilisateurs :
+	* d'emprunter plus de 3 DVDs
+	* de reserver plus de 3 DVDs
+	* de reserver un DVD qu'il a emprunte.
+Néanmoins, les pages de l'application ne permettent pas 
+a un utilisateur de tenter d'effectuer ces actions 
+en n'affichant pas les liens le permettant.
+Il y a ici une double verification: 
+	* une fonctionalite restreinte n'est pas accessible 
+	* meme si l'application etait 'pirate', la base de donnees ne 
+	permettrait pas les etats incoherents.
