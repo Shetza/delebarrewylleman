@@ -31,10 +31,13 @@
 	<property name="warfile"	value="${warfilename}.war" />
 	<property name="buildwar"	value="${build}/war" />
 	<property name="dist"		value="dist" />
+	<property name="dist-name"	value="TpDvdDelebarreWylleman" />
 	<property name="conf"		value="conf" />
 	<property name="entete"		value="${binome}-TP${numero}_${matiere}" />
 	<property name="webpage"	value="${host}:${port}/${warfilename}/" />
 	<property name="doc" 		value="${build}/doc" />
+	
+	<property name="excludes"	value="Thumbs.db, **/UNUSED/**" />
 	
 	<!-- <property name="src"		value="${basedir}/src" />
 	<property name="src-jsp"	value="${src}/views" />
@@ -49,6 +52,7 @@
 	<property name="entete"		value="${binome}-TP${numero}_${matiere}" />
 	<property name="webpage"	value="${host}:${port}/${warfilename}/" />
 	 -->
+	 
 	<path id="classpath">
 		<pathelement location="${classes}" />
  		<fileset dir="${postgresql.home}">
@@ -88,7 +92,7 @@
 		<mkdir dir="${buildwar}/META-INF" />
 		<mkdir dir="${buildwar}/WEB-INF" />
 		<copy todir="${buildwar}">
-			<fileset dir="${static}" />
+			<fileset dir="${static}" excludes="${excludes}" />
 		</copy>
 		<mkdir dir="${buildwar}/WEB-INF/classes" />
 	</target>
@@ -239,16 +243,15 @@
 	<target name="dist" 
 			depends="init_time, compile"
 			description="Génération de l'archive à rendre au responsable de TP.">
-		<property name="final" value="${entete}-${DATE}" />
-		<mkdir dir="${dist}/${binome} - ${sujet}" />
-		<copy todir="${dist}/${binome} - ${sujet}">
-			<fileset dir="${basedir}" excludes="${build}/**, ${dist}/**, ${warfile}" />
+		<mkdir dir="${dist}/${dist-name}" />
+		<copy todir="${dist}/${dist-name}">
+			<fileset dir="${basedir}" excludes="${build}/**, ${dist}/**, ${warfile}, ${excludes}" />
 		</copy>
 		
 		<tar destfile="${dist}/tmp.tar" 
         		longfile="fail"
         		basedir="${dist}" />
-		<gzip src="${dist}/tmp.tar" zipfile="${dist}/${final}.tar.gz" />
+		<gzip src="${dist}/tmp.tar" zipfile="${dist}/${dist-name}.tar.gz" />
 		<delete file="${dist}/tmp.tar" />
 	</target>
 	

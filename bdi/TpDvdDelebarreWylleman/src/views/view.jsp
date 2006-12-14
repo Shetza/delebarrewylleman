@@ -39,8 +39,8 @@
 				<li><a href="view.jsp?action=remove">Supprimer un DVD</a></li> -->
 				<li><a href="ControllerSearch">Rechercher un DVD</a></li>
 				<li><a href="view.jsp?action=myDVDs">Mes DVDs</a></li>
-				<br>
-				<li><a href="view.jsp?action=tools">Outils</a></li>
+				<!-- <br>
+				<li><a href="view.jsp?action=tools">Outils</a></li> -->
 				<br>
 				<li><a href="Manual.html">Consulter l'aide</a></li>
 				<% 

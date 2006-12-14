@@ -1,6 +1,99 @@
-psql -d postgres -U lemeur -f database/scripts/general.sql
-password: lemeur
+*** Service de partage de DVDs ***
 
+
+Description
+--------------------
+
+TP Projet de Base de Données & Internet :
+
+Développement d'une application Web à base de JSP et de JDBC 
+permettant la gestion d'un service de partage de DVDs.
+
+
+MASTER 2 Professionnel IAGL :
+	Ingénierie et Architecture des Grands Logiciels
+
+
+Auteurs
+--------------------
+
+DELEBARRE Johann (j.delebarre@etudiant.univ-lille1.fr)
+WYLLEMAN Julien (julien.wylleman@etudiant.univ-lille1.fr)
+
+
+Technologies
+--------------------
+
+Apache Ant (http://ant.apache.org/)
+Apache Tomcat (http://tomcat.apache.org/)
+Java (http://java.sun.com/)
+PostgreSQL (http://www.postgresql.org/)
+
+
+Version 1.0 - 14 dec. 2006
+--------------------
+
+Apache Ant version 1.6.5
+Apache Tomcat version 5.5.20
+Java version 1.5.0_06
+PostgreSQL 8.1.5
+
+
+Structure de l'archive
+--------------------
+
++---TpDvdDelebarreWylleman
+    +---conf
+    +---lib
+    +---src
+        +---controllers
+        +---dao
+		    +---business
+			+---core
+			+---postgresql
+        +---models
+        +---views
+    +---static
+        +---META-INF
+        +---WEB-INF
+        +---uml
+            +---classes
+            +---bdd
+
+
+Détails du TP
+--------------------
+
+Ci-joint le manuel utilisateur: 'Manual.html'
+
+
+1. Fonctions du service de partage de DVDs
+
+Les fonctions proposées pour le partage de DVDs sont les suivantes :
+	# se 'logger'
+	# rechercher un dvd
+	# emprunter un dvd
+	# reserver un dvd
+	# voir les dvds empruntes et reserves
+	# rendre un dvd
+	# annuler la reservation d'un dvd
+	# se 'delogger'
+
+
+2. Architecture logicielle
+
+
+2.1. Description générale
+
+Le service de partage de DVDs a été développé comme suit.
+La présentation à l'utilisateur (les vues) est conçue à base de JSP.
+Le traitement associé à chaque fonctionnalité est effectué par une Servlet.
+Les Servlets communiquent avec la base de données par l'intermédiaire de DAO.
+Chaque DAO est fourni par une fabrique et interagit avec la base de données.
+Chaque DAO cree, modifie et detruit les objets metiers dont il a la charge.
+
+
+2.2. Détails techniques
 
 les dao create n'utilisent pas l'auto increment des tables
 puisque la version de jdbc ne gere pas la recuperation
@@ -45,3 +138,97 @@ Il y a ici une double verification:
 	* une fonctionalite restreinte n'est pas accessible 
 	* meme si l'application etait 'pirate', la base de donnees ne 
 	permettrait pas les etats incoherents.
+	
+
+3. Utilisation du service de partage de DVDs
+
+Toute la phase de compilation/execution du projet est gérée par Ant 
+au moyen des fichiers 'build.xml' et 'build.properties'.
+
+/!\ 
+	Vérifiez bien que le fichier 'build.properties' contient 
+	bien le chemin du driver PostgresSQL (variable postgresql.home).
+/!\ 
+	Toutes les manipulations expliquées ci-aprés sont à effectuer 
+	à la racine du projet. 
+/!\
+
+
+3.1. Gestion de la base de données
+
+Cette partie n'est à faire qu'une seule fois au premier lancement.
+La commande suivante permet de créer et d'initialiser la base de 
+donnees utilisée par l'application.
+Six fichiers de configurations sont nécessaires à la bonne
+initialisation de la base: 
+
++---conf
+    +---create.sql
+    +---delete.sql
+    +---general.sql
+    +---insert.sql
+    +---triggers.sql
+    +---views.sql
+
+
+	$> psql -d postgres -U lemeur -f conf/general.sql
+	password: lemeur
+
+
+3.2. Compilation du code source
+
+	$> ant compile
+	
+Remarque: 
+Le compilation des servlets génère des warnings, ce n'est pas un problème.
+
+
+3.3. Création de l'archive war
+
+Le fichier de configuration de Ant, 'build.properties', 
+définit le nom de l'archive war grâce à la variable 'warfilename'.
+
+	$> ant war
+
+
+3.4. Déploiement de l'archive war dans Tomcat
+
+Ant permet le déploiement automatique de l'archive war
+dans JOnAS. Afin d'assurer le bon fonctionnement de cette tache, 
+veillez à avoir affecter à la variable d'environnement 'CATALINA_HOME' 
+le nom complet du répertoire dans lequel vous avez installé Tomcat.
+
+	$> ant deploy
+
+Remarque:
+Il existe la commande 'ant undeploy' permettant de retirer le war.
+Cette commande est appelée avant chaque déploiement ce qui
+peut parfois déclencher des erreurs dans la console, 
+notamment au premier deploiement. Pas d'inquiétudes, cette erreur
+n'a pas d'incidence sur le reste de l'exécution.
+
+
+3.5. Lancement de Tomcat
+
+Nous n'indiquerons pas comment lancer Tomcat.
+
+
+3.6. Lancement du navigateur sur l'application
+
+Encore une fois, il est possible d'utiliser Ant pour ce faire.
+
+	$> ant run
+	
+Cette commande lance le browser web, spécifié dans le fichier
+de configuration 'build.properties', sur la page d'accueil
+du service de partage de DVDs. L'adresse de cette page est, 
+elle aussi, déclarée dans le fichier de configuration de Ant.
+
+Si vous ne désirez pas utiliser cette fonctionalité ou si
+celle-ci ne fonctionne pas correctement, vous pouvez toujours
+positionner votre browser web à l'adresse suivante:
+	
+	http://localhost:8080/dvdthequeDelebarreWylleman/
+
+
+Enjoy ! 

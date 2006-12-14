@@ -1,3 +1,7 @@
+ - Sur la page d'acceuil afficher les emprunts en rouge
+ - SESSION a la place de context pour user...
+
+
 Vue des emprunts (avec attributs calculés) --> OK
 Vue du nombre d'emprunts effectués --> OK
 Vue des retardataires --> OK
