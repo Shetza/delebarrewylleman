@@ -153,6 +153,33 @@ au moyen des fichiers 'build.xml' et 'build.properties'.
 	à la racine du projet. 
 /!\
 
+3.0. Listes des commandes Ant 
+
+	# ant clean: 	
+		Néttoie le répertoire de l'application: supprime les répertoires de compilation, de distribution et le fichier de déploiement.
+	# ant compile: 	
+		Compile les fichiers du répertoire source 'src'.
+	# ant database: 
+		Ne fonctionne pas.
+	# ant deploy: 	
+		Déploie l'application dans le répertoire de déploiement de Tomcat '${catalina.home}/webapps/'.
+	# ant dist: 
+		Génère l'archive de distribution de l'application dans le répertoire de distribution '${dist}'.
+	# ant doc: 
+		Génère la documentation du code (javadoc) dans le répertoire de documentation '${doc}'.
+	# ant help: 
+		Affiche cet aide.
+	# ant prepare: 
+		Crée la structure de répertoires '${build}' recevant les fichiers de compilation.
+	# ant run: 
+		Lance la page principale de l'application spécifiée (ici: '${webpage}') dans le navigateur Web spécifié dans le fichier de propriétés (ici: '${browser}')
+	# ant undeploy: 
+		Annule le déploiement de l'application et supprime tous les fichiers et répertoires relatifs à l'application du répertoire de déploiement de Tomcat.
+	# ant war: 
+		Crée le fichier war de déploiement '${warfile}'.
+
+Remarque: Les variables '${x}' resultent de l'execution de la commande par Ant.
+	Elles sont soit ecritent dans le 'build.xml' soit dans le 'build.properties'.
 
 3.1. Gestion de la base de données
 
