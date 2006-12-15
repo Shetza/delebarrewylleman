@@ -12,8 +12,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import javax.servlet.ServletException;
 
 public class Search extends Controller {
@@ -31,17 +30,15 @@ public class Search extends Controller {
 	}
 	
 	private void search(HttpServletRequest request, HttpServletResponse response, String title, String tempKind, String date) throws IOException, ServletException {
-		//String order = request.getParameter("order");
-		//String source = request.getParameter("source");
-		String tempUser = request.getParameter("user");
 		try {			
 			int kindId = 0;
 			if (tempKind != null && !tempKind.equals("") ) kindId = Integer.parseInt(tempKind);
-			int userId = 0;
-			if (tempUser != null && !tempUser.equals("") ) userId = Integer.parseInt(tempUser);
+			
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("user");
 			
 			DVDDAO dvdDAO = factory.getDVDDAO();
-			List dvds = dvdDAO.search(userId, title, kindId, date, null);
+			List dvds = dvdDAO.search(0, title, kindId, date, null);
 			
 			super.forward("search", "dvds", dvds, request, response);
 		}

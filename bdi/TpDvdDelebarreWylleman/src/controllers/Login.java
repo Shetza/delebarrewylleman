@@ -10,8 +10,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import javax.servlet.ServletException;
 
 public class Login extends Controller {
@@ -47,9 +46,10 @@ public class Login extends Controller {
 					super.forward("login", "error", error, request, response);
 				}
 				else {
-					context.setAttribute("user", user);
+					HttpSession session = request.getSession();
+					session.setAttribute("user", user);
 					String message = "Bienvenue " + user.getFirstName() + " " + user.getLastName() + " sur le service de partage de DVDs.";
-					super.forward("", "message", message, request, response);
+					super.forward("myDVDs", "message", message, request, response);
 				}
 			}
 		}

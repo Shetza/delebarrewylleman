@@ -15,8 +15,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import javax.servlet.ServletException;
 
 public class Add extends Controller {
@@ -33,7 +32,8 @@ public class Add extends Controller {
 		Date date = null;
 		
 		try {
-			User user = (User) context.getAttribute("user");
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("user");
 			
 			title = request.getParameter("title");
 			String tempKind = request.getParameter("kind");

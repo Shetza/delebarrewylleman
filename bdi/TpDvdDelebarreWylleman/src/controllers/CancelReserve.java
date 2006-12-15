@@ -13,8 +13,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import javax.servlet.ServletException;
 
 public class CancelReserve extends Controller {
@@ -25,7 +24,9 @@ public class CancelReserve extends Controller {
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		try {
-			User user = (User) context.getAttribute("user");
+			HttpSession session = request.getSession();
+			
+			User user = (User) session.getAttribute("user");
 			String tempDvd = request.getParameter("dvdId");
 			
 			if (tempDvd == null || tempDvd.equals("")) {

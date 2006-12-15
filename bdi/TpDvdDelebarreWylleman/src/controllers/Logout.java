@@ -9,8 +9,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import javax.servlet.ServletException;
 
 public class Logout extends Controller {
@@ -21,14 +20,15 @@ public class Logout extends Controller {
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		try {
-			User user = (User) context.getAttribute("user");
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("user");
 			if ( user == null ) {
 				String error = "Fermeture de session annul&eacute;e, auncune session ouverte.";
 				super.forward("logout", "error", error, request, response);
 			}
 			else {
 				String message = "A bient&ocirc;t " + user.getFirstName() + " " + user.getLastName() + ".";
-				context.removeAttribute("user");
+				session.removeAttribute("user");
 				super.forward("logout", "message", message, request, response);
 			}
 		}
