@@ -42,6 +42,11 @@
 		<param-value>dao.postgresql.PostGreSQLDAOFactory</param-value>
 	</context-param>
 	
+	<!-- La durée d'expiration d'une session (en minutes) -->
+	<session-config>
+      <session-timeout>1</session-timeout>
+    </session-config>
+	
 	<!-- SERVLETS -->
 	
 	<servlet>
@@ -62,16 +67,6 @@
     <servlet-mapping>
 		<servlet-name>ControllerLogout</servlet-name>
 		<url-pattern>/ControllerLogout</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>ControllerAdd</servlet-name>
-		<servlet-class>controllers.Add</servlet-class>
-	</servlet>
-	
-    <servlet-mapping>
-		<servlet-name>ControllerAdd</servlet-name>
-		<url-pattern>/ControllerAdd</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
