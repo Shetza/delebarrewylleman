@@ -93,10 +93,30 @@ CREATE VIEW vue_emprunts2
 		utilisateurs u,
 		dvds d,
 		emprunts e
-	WHERE
-		d.id = e.dvds_id
-	AND
-		u.id = e.utilisateurs_id;
+	WHERE d.id = e.dvds_id
+	AND u.id = e.utilisateurs_id
+	AND e.date_reserve2emprunt IS NULL;
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE VIEW vue_reserves2
+	AS SELECT
+		u.id as utilisateurs_id,
+		d.id as dvds_id,
+		d.titre as dvds_titre,
+		e.date_emprunt as date_emprunt,
+		e.date_emprunt+15 as date_limite,
+		e.date_retour as date_retour,
+		e.prolonge as prolonge,
+		e.loueur_suivant_id as reserve_utilisateurs_id
+	FROM
+		utilisateurs u,
+		dvds d,
+		emprunts e
+	WHERE d.id = e.dvds_id
+	AND u.id = e.utilisateurs_id
+	AND e.loueur_suivant_id IS NOT NULL
+	AND e.date_reserve2emprunt IS NULL;
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 -- Vue vue_nombre_emprunts
