@@ -19,7 +19,7 @@ public interface ArtistDAO {
 	/**
 	 * Met a jour l'objet <code>Artist</code> passe en parametre.
 	 * Lance une exception de type <code>DAOException</code> si une erreur survient.
-	 * @param Artist Le l'objet <code>Artist</code> a mettre a jour.
+	 * @param artist Le l'objet <code>Artist</code> a mettre a jour.
 	 */
 	public void update(Artist artist) throws DAOException;
 		
@@ -27,8 +27,7 @@ public interface ArtistDAO {
 	 * Renvoie l'objet metier <code>Artist</code> associe au triplet d'identifiants passe en parametre.
 	 * Renvoie <code>null</code> si l'identifiant n'existe pas.
 	 * Lance une exception de type <code>DAOException</code> si une erreur survient.
-	 * @param dvdId La reference du dvd emprunte.
-	 * @param userId La reference de l'utilisateur qui a emprunte le dvd.
+	 * @param id La reference de l'artiste.
 	 * @return l'objet <code>Artist</code> associe au triplet d'identifiants.
 	 */
 	public Artist getArtistById(int id) throws DAOException;
