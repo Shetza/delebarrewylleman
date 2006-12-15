@@ -21,7 +21,7 @@ public class PostGreSQLLoanDAO extends PostGreSQLModelDAO implements LoanDAO {
      * @see dao.business.LoanDAO#create(int, int, java.util.Date)
      */
 	public Loan create(int dvdID, int userId, Date date) throws DAOException {
-		String query = "INSERT INTO emprunts VALUES(" + dvdID + ", " + userId + ", '" + date + "', NULL, NULL, NULL);" ;
+		String query = "INSERT INTO emprunts VALUES(" + dvdID + ", " + userId + ", '" + date + "', NULL, NULL, NULL, NULL);" ;
 		int insertedRowNumber = PostGreSQLCommons.executeUpdate(query);
 		if ( insertedRowNumber != 1 ) throw new DAOException("Nombre d'enregistrement inserer non valide, creation annulee.");
 		
@@ -68,7 +68,7 @@ public class PostGreSQLLoanDAO extends PostGreSQLModelDAO implements LoanDAO {
      * @see dao.business.LoanDAO#getLoanById(int, int)
      */
 	public Loan getLoanById(int dvdId, int userId) throws DAOException {
-		String query = "SELECT * FROM vue_emprunts2 WHERE date_retour IS NULL" ; 
+		String query = "SELECT * FROM vue_emprunts2 WHERE true" ; 
 		if ( dvdId != 0 ) query += " AND dvds_id = " + dvdId ;
 		if ( userId != 0 ) query += " AND utilisateurs_id = " + userId ;
 		query += ";" ;
@@ -79,8 +79,8 @@ public class PostGreSQLLoanDAO extends PostGreSQLModelDAO implements LoanDAO {
      * @see dao.business.LoanDAO#search(int, String)
      */
 	public List search(int userId, String order) throws DAOException {
-		String query = "SELECT * FROM vue_emprunts2 WHERE date_retour IS NULL" ;
-		if ( userId != 0 ) query += " AND utilisateurs_id = " + userId ;
+		String query = "SELECT * FROM vue_emprunts2" ;
+		if ( userId != 0 ) query += " WHERE utilisateurs_id = " + userId ;
 		if ( order != null ) query += " ORDER BY " + order ;
 		query += ";" ;
 		return this.executeSelect(query);
@@ -90,8 +90,8 @@ public class PostGreSQLLoanDAO extends PostGreSQLModelDAO implements LoanDAO {
      * @see dao.business.LoanDAO#getLoans(models.User)
      */
 	public List getLoans(models.User user) throws DAOException {
-		String query = "SELECT * FROM vue_emprunts2 WHERE date_retour IS NULL" ;
-		if ( user != null ) query += " AND utilisateurs_id = " + user.getId() ;
+		String query = "SELECT * FROM vue_emprunts2" ;
+		if ( user != null ) query += " WHERE utilisateurs_id = " + user.getId() ;
 		query += " ORDER BY date_emprunt ;" ;
 		return this.executeSelect(query);
 	}
@@ -100,8 +100,8 @@ public class PostGreSQLLoanDAO extends PostGreSQLModelDAO implements LoanDAO {
      * @see dao.business.LoanDAO#getReserves(models.User)
      */
 	public List getReserves(models.User user) throws DAOException {
-		String query = "SELECT * FROM vue_emprunts2 WHERE date_retour IS NULL" ;
-		if ( user != null ) query += " AND reserve_utilisateurs_id = " + user.getId() ;
+		String query = "SELECT * FROM vue_reserves2" ;
+		if ( user != null ) query += " WHERE reserve_utilisateurs_id = " + user.getId() ;
 		query += " ORDER BY date_emprunt ;" ;
 		return this.executeSelect(query);
 	}
@@ -110,17 +110,22 @@ public class PostGreSQLLoanDAO extends PostGreSQLModelDAO implements LoanDAO {
      * @see dao.business.LoanDAO#isBorrowable(models.DVD)
      */
 	public boolean isBorrowable(models.DVD dvd) throws DAOException {
-		String query = "SELECT * FROM vue_emprunts2 WHERE date_retour IS NULL" ;
-		if ( dvd != null ) query += " AND dvds_id = " + dvd.getId() ;
+		String query = "SELECT * FROM vue_emprunts2" ;
+		if ( dvd != null ) query += " WHERE dvds_id = " + dvd.getId() ;
 		query += ";" ;
-		return this.executeSelect(query).isEmpty();
+		boolean isNotYetBorrowed = this.executeSelect(query).isEmpty();
+		
+		query = "SELECT * FROM vue_reserves2";
+		if ( dvd != null ) query += " WHERE dvds_id = " + dvd.getId() ;
+		query += ";" ;
+		return this.executeSelect(query).isEmpty() & isNotYetBorrowed;
 	}
 	
 	/* (non-Javadoc)
      * @see dao.business.LoanDAO#isReservable(models.DVD)
      */
 	public boolean isReservable(models.DVD dvd) throws DAOException {
-		String query = "SELECT * FROM vue_emprunts2 WHERE date_retour IS NULL AND reserve_utilisateurs_id IS NULL" ;
+		String query = "SELECT * FROM vue_emprunts2 WHERE reserve_utilisateurs_id IS NULL" ;
 		if ( dvd != null ) query += " AND dvds_id = " + dvd.getId() ;
 		query += ";" ;
 		return ( this.executeSelect(query).size() == 1 );
@@ -130,8 +135,8 @@ public class PostGreSQLLoanDAO extends PostGreSQLModelDAO implements LoanDAO {
      * @see dao.business.LoanDAO#canBorrow(models.User)
      */
 	public boolean canBorrow(models.User user) throws DAOException {
-		String query = "SELECT * FROM vue_emprunts2 WHERE date_retour IS NULL" ;
-		if ( user != null ) query += " AND utilisateurs_id = " + user.getId() ;
+		String query = "SELECT * FROM vue_emprunts2" ;
+		if ( user != null ) query += " WHERE utilisateurs_id = " + user.getId() ;
 		query += ";" ;
 		return ( this.executeSelect(query).size() < 3 );
 	}
@@ -140,8 +145,8 @@ public class PostGreSQLLoanDAO extends PostGreSQLModelDAO implements LoanDAO {
      * @see dao.business.LoanDAO#canReserve(models.User)
      */
 	public boolean canReserve(models.User user) throws DAOException {
-		String query = "SELECT * FROM vue_emprunts2 WHERE date_retour IS NULL" ;
-		if ( user != null ) query += " AND reserve_utilisateurs_id = " + user.getId() ;
+		String query = "SELECT * FROM vue_emprunts2" ;
+		if ( user != null ) query += " WHERE reserve_utilisateurs_id = " + user.getId() ;
 		query += ";" ;
 		return ( this.executeSelect(query).size() < 3 );
 	}

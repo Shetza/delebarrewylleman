@@ -14,7 +14,14 @@ import javax.sql.DataSource;
 
 public class PostGreSQLCommons {
 	
+	/**
+	 * Le pool de connexion.
+	 */
 	private static DataSource _dataSource;
+	
+	/**
+	 * Recupere le pool de connexion cree par Tomcat.
+	 */
 	static {
 		try {
 			Context initContext = new InitialContext();
@@ -31,6 +38,9 @@ public class PostGreSQLCommons {
 		}
 	}
 	
+	/**
+	 * Recupere et renvoie une nouvelle connection du pool.
+	 */
 	public static Connection getConnection() throws DAOException {
 		try {
 			return _dataSource.getConnection();
@@ -88,6 +98,9 @@ public class PostGreSQLCommons {
 		}
 	}
 	
+	/**
+	 * Calcule et renvoie la clef suivante a utiliser pour l'insertion d'un nouvel enregistrement dans la table specifie.
+	 */
 	public static int getGeneratedKey(String table) throws DAOException {
 		String query = "SELECT COUNT(*) as key FROM " + table + ";" ;
 		Statement st = PostGreSQLCommons.executeQuery(query);
@@ -108,6 +121,9 @@ public class PostGreSQLCommons {
 		}
 	}
 	
+	/**
+	 * Ferme la connection et le statement passee en parametre.
+	 */
 	public static void close(Statement st) {
 		try {
 			Connection conn = st.getConnection();
