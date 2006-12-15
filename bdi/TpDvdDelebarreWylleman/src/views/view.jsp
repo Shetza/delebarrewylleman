@@ -12,7 +12,7 @@
 </head>
 
 <% 
-	models.User user = (models.User) application.getAttribute("user");
+	models.User user = (models.User) session.getAttribute("user");
 %>
 
 <body>
@@ -55,8 +55,15 @@
 	<% 
 	String action = request.getParameter("action");
 	if ( action == null ) {
-		request.removeAttribute("action");
-		request.setAttribute("message", new String("Bienvenue sur le service de partage de DVDs de Johann DELEBARRE et Julien WYLLEMAN.<br>\nMerci de vous identifier."));
+		if ( user == null ) {
+			request.removeAttribute("action");
+			request.setAttribute("message", new String("Bienvenue sur le service de partage de DVDs de Johann DELEBARRE et Julien WYLLEMAN.<br>\nMerci de vous identifier."));
+		}
+		else {
+		%>
+		<jsp:include page="<%= "/myDVDs.jsp" %>" flush="true" />
+		<% 
+		}
 	}
 	else {
 		// Si l'utilisateur n'est pas identifie et qu'il n'est pas en cours ni d'ouverture ni de fermeture de session 
@@ -64,12 +71,12 @@
 			request.setAttribute("error", new String("Acc&egrave;s restreint, veuillez vous identifier."));
 		}
 		else {
-			String dvd = request.getParameter("dvd");
+			//String dvd = request.getParameter("dvd");
 			String filename = "/" + action + ".jsp";
-			if ( dvd != null )	filename += "?dvd=" + dvd;
+			//if ( dvd != null )	filename += "?dvd=" + dvd;
 			try {
 			%>
-				<jsp:include page="<%= filename.toString() %>" flush="true" />
+		<jsp:include page="<%= filename.toString() %>" flush="true" />
 			<% 
 			} catch(Exception e) {
 				request.setAttribute("error", e.toString());
@@ -77,8 +84,8 @@
 		}
 	}
 	%>
-	<jsp:include page="/error.jsp" flush="true" />
-	<jsp:include page="/message.jsp" flush="true" />
+		<jsp:include page="/error.jsp" flush="true" />
+		<jsp:include page="/message.jsp" flush="true" />
 	
 	</div>
 	

@@ -1,6 +1,6 @@
 <% 
 dao.core.DAOFactory factory = (dao.core.DAOFactory) application.getAttribute("factory");
-models.User user = (models.User) application.getAttribute("user");
+models.User user = (models.User) session.getAttribute("user");
 dao.business.LoanDAO loanDAO = factory.getLoanDAO();
 java.util.Date currentDate = new java.util.Date(System.currentTimeMillis());
 %>

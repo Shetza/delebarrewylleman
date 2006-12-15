@@ -1,6 +1,6 @@
 <form> 
 	<% 
-	models.User user = (models.User) application.getAttribute("user");
+	models.User user = (models.User) session.getAttribute("user");
 	String dvdId = request.getParameter("dvdId"); 
 	dao.core.DAOFactory factory = (dao.core.DAOFactory) application.getAttribute("factory");
 	dao.business.DVDDAO dvdDAO = factory.getDVDDAO();

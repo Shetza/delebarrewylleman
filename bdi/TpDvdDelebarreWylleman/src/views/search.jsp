@@ -1,7 +1,7 @@
 <form method="POST" action="ControllerSearch"> 
 	<% 
 	java.util.List kinds = (java.util.List) application.getAttribute("kinds");
-	models.User user = (models.User) application.getAttribute("user");
+	models.User user = (models.User) session.getAttribute("user");
 	%>
 	<h3>Rechercher un DVD</h3>
 	<table style="width: 100%;">
