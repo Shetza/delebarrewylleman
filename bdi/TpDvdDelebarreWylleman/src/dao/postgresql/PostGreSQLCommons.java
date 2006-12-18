@@ -62,7 +62,7 @@ public class PostGreSQLCommons {
 		try {
 			st = conn.createStatement();
 			st.executeQuery(query);
-			System.out.println("PostGreSQLCommons: "+query);
+			//System.out.println("PostGreSQLCommons: "+query);
 			return st;
 		} catch (SQLException e) {
 			// Dans tous les cas si un probleme survient, 
@@ -87,7 +87,7 @@ public class PostGreSQLCommons {
 			int result = st.executeUpdate(query);
 			conn.commit();
 			PostGreSQLCommons.close(st);
-			System.out.println("PostGreSQLCommons: "+query);
+			//System.out.println("PostGreSQLCommons: "+query);
 			return result;
 		} catch (SQLException e) {
 			// Dans tous les cas si un probleme survient, 

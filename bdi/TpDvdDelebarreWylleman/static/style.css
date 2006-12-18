@@ -5,25 +5,56 @@ h1, h2, h3, h4 {
 	letter-spacing: 1px;
 }
 
+body {
+	background-color: rgb(253,219,198);
+}
+
+a {
+	text-decoration: none;
+	border: none;
+	color: rgb(247,164,9);
+}
+
+thead {
+	text-align: left;
+	color: #999;
+}
+
+form {
+	background-color: rgb(253,230,215);
+	border:#E1D6c6 1px solid;
+}
+
+input {
+	background-color: rgb(254,239,231);
+}
+
+textarea {
+	background-color: rgb(254,239,231);
+}
+
+select {
+	background-color: rgb(254,239,231);
+}
+
 #header {
 	width:100%;
 	padding:0;
 	border:#E1D6c6 1px solid;
+	background-color: rgb(253,230,215);
 }
 
 #header h1 a {
 	text-decoration: none;
 	border:none;
-	color: #676E04;
 }
 
-#header h1 
-{
+#header h1 {
 	margin: 0;	
 	font-size: 1.4em;	
 	padding:10px 20px 10px 0;
 	text-align:right;	
-	color: #676E04;
+	color: rgb(247,119,43);
 }
 
 #main {
@@ -31,12 +62,6 @@ h1, h2, h3, h4 {
 	height:80%;
 	padding: 0px 0px 0px 0px ;
 	font-family: Georgia, lucida, Verdana, sans-serif;
-}
-
-#main a {
-	text-decoration: none;
-	border:none;
-	color: #909D73;
 }
 
 #content {
@@ -49,31 +74,31 @@ h1, h2, h3, h4 {
 	margin: 10px 0 0 0;
 	padding:2px;
 	font-size: 1.2em;
-	color: #676E04;
+	color: rgb(247,119,43);
 	text-align:left;
 	font-weight:bold;
-	border-bottom:#E1D6c6 1px solid;
+	border-bottom: rgb(247,119,43) 1px solid;
 }
 
 #content h2 a {
-	color: #676E04;
+	color: rgb(247,119,43);
 }
 
 #content h3 {
 	margin: 10px 0 0 0;
 	padding: 2px;
 	font-size: 1.1em;
-	color: #676E04;
+	color: rgb(247,119,43);
 	text-align:left;
 	font-weight:bold;
-	border-bottom:#E1D6c6 1px dashed;
+	border-bottom: rgb(247,119,43) 1px dashed;
 }
 
 #content h4 {
 	margin: 10px 0 0 0;
 	padding: 2px;
 	font-size: 1em;
-	color: #676E04;
+	color: rgb(247,119,43);
 	text-align:left;
 	font-weight:bold;
 }
@@ -91,7 +116,6 @@ h1, h2, h3, h4 {
 }
 
 #error form {
-	border:#E1D6c6 1px solid;
 	padding: 2px 10px 2px 10px;
 	margin: 1em;
 	font-size: 1.2em;
@@ -105,7 +129,6 @@ h1, h2, h3, h4 {
 }
 
 #validator form {
-	border:#E1D6c6 1px solid;
 	padding: 2px 10px 2px 10px;
 	margin: 1em;
 	font-size: 1.2em;
@@ -114,7 +137,6 @@ h1, h2, h3, h4 {
 }
 
 #content form {
-	border:#E1D6c6 1px solid;
 	padding: 2px 10px 2px 10px;
 	margin: 1em;
 }
@@ -122,28 +144,24 @@ h1, h2, h3, h4 {
 #content form input.button {
 	margin-bottom: 1px ! important;
 	font-size: 0.9em;
-	color: #676E04;
+	color: rgb(247,119,43);
 	cursor: pointer;
 	padding: 2px 10px 2px 10px;
 	text-transform: lowercase;
-	border:#E1D6c6 1px solid;
 	background:#F3F6ED;
 }
 
 #content form input.textInput {
 /*	padding: 2px 10px 2px 10px;*/
-	border:#E1D6c6 1px solid;
 	background:#F3F6ED;
 }
 
 #content form textarea.textInput {
 /*	padding: 2px 10px 2px 10px;*/
-	border:#E1D6c6 1px solid;
 	background:#F3F6ED;
 }
 
 #content table.withBorder {
-	border:#E1D6c6 1px solid;
 	padding: 2px 10px 2px 10px;
 	margin: 1em;
 }
@@ -158,10 +176,10 @@ h1, h2, h3, h4 {
 	margin: 10px 0 0 0;
 	padding:2px;
 	font-size: 0.8em;
-	color: #676E04;
-	text-align:center;
+	color: rgb(247,119,43);
+	text-align: center;
 	border:#E1D6c6 1px solid;
-	background:#F3F6ED;
+	background-color: rgb(253,230,215);
 	font-weight:bold;
 }
 
@@ -171,7 +189,7 @@ h1, h2, h3, h4 {
 	margin: 0px 0px 10px 0px;
 	font-size: 0.8em;	
 	border:#E1D6c6 1px solid;
-	border-top:#f3f6ed 1px solid;
+	border-top:rgb(253,219,198) 1px solid;
 }
 
 #sidebar ul li {
@@ -182,10 +200,10 @@ h1, h2, h3, h4 {
 #footer {
 	margin:0 auto;
 	padding: 7px 0px 0px 0px ;
-	border-top:#BBC4A3 1px solid;
+	border-top: rgb(247,119,43) 1px solid;
 	clear: both;
 	font-size: 0.7em;
-	color: #999;
+	color: rgb(247,119,43);
 	text-align:center;
 	width:100%;
 }

@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<meta name="robots" content="all" />
+	<meta name="author" content="Johann DELEBARRE" />
+	<meta name="author" content="Julien WYLLEMAN" />
+	<meta name="keywords" content="BDD" />
+	<meta name="description" content="Service de partage de DVDs" />
+	<title>TP Projet BDD - Delebarre Wylleman</title>
+
+	<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+	<div id="header">
+		<h1>Service de partage de DVDs - Manuel d'utilisation</h1>
+	</div>
+	
+	<div id="main">
+		<div id="sidebar">
+			<h2>Menu</h2>
+			<ul>
+				<li><a href="#login"><b>Se connecter</b>&sup1;</a></li>
+				<li><a href="#logout"><b>Se d&eacute;connecter</b></li>
+				<br>
+				<li><a href="#search">Rechercher un DVD</a></li>
+				<li><a href="#myDVDs">Mes DVDs&sup2;</a></li>
+				<br>
+				<li><a href="#borrow">Emprunter un DVD</a></li>
+				<li><a href="#reserve">R&eacute;server un DVD</a></li>
+				<li><a href="#d&eacute;tail">Afficher les d&eacute;tails d'un DVD</a></li>
+				<li><a href="#avis">Commenter un DVD</a></li>
+				<br>
+				<li><a href="dvdtheque.html">Le sujet du Projet</a></li>
+				<li><a href="#uml">Le diagramme pseudo-uml</a></li>
+				<li><a href="#bdd">Le schéma de bdd</a></li>
+				<br>
+				<li><a href="http://localhost:8080/dvdthequeDelebarreWylleman/">Retourner sur l'application</a></li>
+			</ul>
+		</div>
+	</div>
+	
+	<div id="content">
+		<h2>Bienvenue sur le manuel utilisateur du service de partage de DVDs</h2>
+		
+		<h4><a href="dvdtheque.html">Le sujet du Projet</a></h4>
+		
+		<p>La suite du manuel d&eacute;crit chaque fonctionnalit&eacute; ainsi que leur limite.</p>
+		
+		<a name="index" style="color:black;">
+			<form>
+				<h3>Lancement de l'application</h3>
+				<ul>
+					Bienvenue sur le service de partage de DVDs de Johann DELEBARRE et Julien WYLLEMAN.<br>
+					Merci de vous identifier.<br>
+					<br>
+					A ce stade, seul le lien vers l'identification&sup1; est disponible dans le menu.<br>
+					<br>
+					Si un utilisateur tente d'acceder directement &agrave; une page sans &ecirc;tre identifi&eacute; ou si sa session &agrave; expir&eacute;e, le message suivant appara&icirc;tra :<br>
+					<br>
+					<div id=error>
+						<table>
+							<td>
+								<img width="48" height="48" src="pictures/forbidden.png" border="0" />
+							</td>
+							<td>
+								&nbsp;&nbsp;&nbsp;
+							</td>
+							<td>
+								Acc&egrave;s restreint ou session expir&eacute;e, veuillez vous identifier.
+							</td>
+						</table>
+					</div>
+				<br>
+				</ul>
+			</form>
+		</a>
+		
+		<a name="login" style="color:black;">
+			<form method="POST">
+				<h3>Se connecter&sup1;</h3><br>
+				<p> Login       : <input name="login"> </p>
+				<p> Password    : <input type="password" name="pass"> </p>
+				<p> Cliquez sur <input type="submit" value="Valider"/> pour soumettre votre requ&ecirc;te, sinon <input type="reset" value="Annuler"/> </p>
+				<br>
+				Si l'identification s'est bien d&eacute;roul&eacute;e, un message d'accueil du type appara&icirc;tra :<br>
+				<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bienvenue "Pr&eacute;nom" "Nom" sur le service de partage de DVDs.<br>
+				<br>
+				De plus, les listes des DVDs en cours d'emprunt ainsi que ceux r&eacute;serv&eacute;s seront affich&eacute;es (cf. partie "Mes DVDs"&sup2; pour plus de d&eacute;tails).<br>
+				En cas d'&eacute;chec un message d'erreur appara&icirc;t :<br>
+				<ul>
+					<li>Si le champ 'Login' n'est pas rempli:
+						<div id="error">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Identification annul&eacute;e, le login n'est pas correct.
+						</div>
+					</li>
+					<li>Si le champ 'Password' n'est pas rempli:
+						<div id="error">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Identification annul&eacute;e, le mot de passe n'est pas correct.
+						</div>
+					</li>
+					<li>Si le login et/ou mot de passe sont incorrects: 
+						<div id="error">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Identification annul&eacute;e, le nom d'utilisateur n'existe pas ou il ne correspond pas au mot de passe.
+						</div>
+					</li>
+					<li>Si l'erreur provient de l'application: 
+						<div id="error">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Identification annul&eacute;e, une erreur est survenue: + le d&eacute;tail de l'erreur.
+						</div>
+					</li>
+				</ul>
+				<br>
+			</form>
+		</a>
+			
+		<a name="logout" style="color:black;">
+			<form method=POST>
+				<h3>Se d&eacute;connecter</h3><br>
+				Si la d&eacute;connection s'est bien d&eacute;roul&eacute;e, un message du type suivant appara&icirc;tra :<br>
+				<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A bient&ocirc;t "Pr&eacute;nom" "Nom".<br>
+				<br>
+				En cas d'&eacute;chec un message d'erreur appara&icirc;t :<br>
+				<ul>
+					<li>Si la sesson &eacute;tait d&eacute;j&agrave; ferm&eacute;e ou si la session &agrave; expir&eacute;e: 
+						<div id="error">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fermeture de session annul&eacute;e, auncune session ouverte.
+						</div>
+					</li>
+					<li>Si l'erreur provient de l'application: 
+						<div id="error">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fermeture de session annul&eacute;e, une erreur est survenue: + le d&eacute;tail de l'erreur.
+						</div>
+					</li>
+				</ul>
+				<br>
+			</form>
+		</a>
+		
+		<a name="search" style="color:black;">
+			<form method=POST>
+				<h3>Rechercher un DVD</h3><br>
+				<table style="width: 100%;">
+					<thead>
+						<tr>
+							<td>Titre</td>
+							<td>Cat&eacute;gorie</td>
+							<td>Date de parution<br/>(yyyy-mm-dd)</td>
+							
+							<td>Actions possibles</td>
+						</tr>
+						<tr>
+							<td><input name="title" type="text" size="30" value="The Matrix"></td>
+							<td>
+								<select name="kind" size="1">
+									<option value="" selected="selected"> - Choisir - </option>
+								</select>
+							</td>
+							<td><input name="date" type="text" size="10"></td>
+							<td><input value="Affiner la rechercher" type="submit"></td>
+						</tr>
+					</thead>
+				</table>
+				<br>
+				Par d&eacute;faut (ou si les champs ne sont pas remplis), cette page affiche tous les DVDs disponibles.<br>
+				Afin de rechercher un, ou plusieurs, DVDs en particulier, plusieurs crit&egrave;res de selection sont mis &agrave; votre disposition: 
+				<ul>
+					<li>Le titre du DVD</li>
+					<li>La cat&eacute;gorie du DVD</li>
+					<li>La date de parution du DVD</li>
+				</ul>
+				<br>
+				ATTENTION: Le champ titre est sensible &agrave; la casse.<br>
+				<br>
+				S'il n'existe aucun DVD, le message suivant appara&icirc;t :<br>
+				<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Aucun dvd n'a &eacute;t&eacute; trouv&eacute;.<br>
+				<br>
+				L'exemple suivant montre les possibilit&eacute;s de navigation &agrave; partir du r&eacute;sultat de la recherche: <br>
+				<table style="width: 100%;">
+					<thead>
+						<tr>
+							<td>Titre</td>
+							<td>Cat&eacute;gorie</td>
+							<td>Date de parution<br/>(yyyy-mm-dd)</td>
+							
+							<td>Actions possibles</td>
+						</tr>
+						<tr>
+							<td><input name="title" type="text" size="30"></td>
+							<td>
+								<select name="kind" size="1">
+									<option value="" selected="selected"> - Choisir - </option>
+								</select>
+							</td>
+							<td><input name="date" type="text" size="10"></td>
+							<td><input value="Affiner la rechercher" type="submit"></td>
+						</tr>
+					</thead>
+					<tbody style="max-height: 320px; overflow: auto;">
+						<tr>
+							<td style="text-align:left;">The Matrix</td>
+							<td style="text-align:left;">Science-fiction</td>
+							<td style="text-align:left;">1999-06-23</td>
+							<td style="text-align:left;"><a href="#borrow"><img alt="Emprunter" title="Emprunter le DVD The Matrix" border="0" /></a> <a href="#d&eacute;tail"><img alt="D&eacute;tails" title="Afficher les d&eacute;tails du DVD The Matrix" border="0" /></a></td>
+						</tr>
+						<tr>
+							<td style="text-align:left;">The Matrix Reloaded</td>
+							<td style="text-align:left;">Science-fiction</td>
+							<td style="text-align:left;">2003-05-16</td>
+							<td style="text-align:left;"><a href="#reserve"><img alt="R&eacute;server" title="R&eacute;server le DVD The Matrix Reloaded" border="0" /></a> <a href="#d&eacute;tail"><img alt="D&eacute;tails" title="Afficher les d&eacute;tails du DVD The Matrix Reloaded" border="0" /></a></td>
+						</tr>
+						<tr>
+							<td style="text-align:left;">The Matrix Revolutions</td>
+							<td style="text-align:left;">Science-fiction</td>
+							<td style="text-align:left;">2003-11-05</td>
+							<td style="text-align:left;"><a href="#d&eacute;tail"><img alt="D&eacute;tails" title="Afficher les d&eacute;tails du DVD The Matrix Revolutions" border="0" /></a></td>
+						</tr>
+					<tbody>
+				</table>
+				<br>
+				Vous pouvez interagir avec chaque DVD de diff&eacute;rentes mani&egrave;res: 
+				<ul>
+					<li>Le DVD "The Matrix" est libre, vous pouvez donc l'emprunter;</li>
+					<li>Le DVD "The Matrix Reloaded" est d&eacute;j&agrave; en cours d'emprunt, vous pouvez donc le r&eacute;server;<br>
+					Il sera automatiquement emprunt&eacute; pour vous d&egrave;s qu'il aura &eacute;t&eacute; rendu par son emprunteur actuel.</br></li>
+					<li>Le DVD "The Matrix Revolutions" est est d&eacute;j&agrave; en cours d'emprunt mais est aussi d&eacute;j&agrave; r&eacute;serv&eacute;. Vous ne pouvez qu'afficher les d&eacute;tails de ce DVD;</li>
+				</ul>
+				Dans tous les cas, vous pourrez toujours, au moins, afficher les d&eacute;tails d'un DVD.<br>
+				<br>
+			</form>
+		</a>
+		
+		<a name="myDVDs" style="color:black;">
+			<form method=POST>
+				<h3>Mes DVDs&sup2;</h3><br>
+				Voyons sur un exemple les interactions possibles dans cette partie. Notons que nous suppossons &ecirc;tre le 18 d&eacute;cembre.<br>
+				<h4>Mes Emprunts</h4><br/>
+				<table style="width: 100%;">
+					<thead>
+						<tr>
+							<td>DVD</td>
+							<td>Date d'emprunt</td>
+							<td>Date limite de retour</td>
+							<td>Actions possibles</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="text-align:left;">The Matrix</td>
+							<td style="text-align:left;">2006-12-18</td>
+				
+							<td style="text-align:left;">2007-01-02</td>
+							<td style="text-align:left;">
+								<a href="ControllerGiveBack?dvdId=1" onclick="return confirm('&Ecirc;tes-vous s&ucirc;r de vouloir rendre le DVD The Matrix ?')"><img alt="Rendre" title="Rendre le DVD The Matrix" border="0" /></a>
+								<a href="view.jsp?action=details&dvdId=1"><img alt="D&eacute;tails" title="Afficher les d&eacute;tails du DVD The Matrix" border="0" /></a>
+							</td>
+						</tr>
+						<tr>
+							<td style="text-align:left;">The Matrix Reloaded</td>
+							<td style="text-align:left;">2006-12-01</td>
+				
+							<td style="text-align:left;"><div id="error">2006-12-16</div></td>
+							<td style="text-align:left;">
+								<a href="ControllerGiveBack?dvdId=1" onclick="return confirm('&Ecirc;tes-vous s&ucirc;r de vouloir rendre le DVD The Matrix ?')"><img alt="Rendre" title="Rendre le DVD The Matrix" border="0" /></a>
+								<a href="view.jsp?action=details&dvdId=1"><img alt="D&eacute;tails" title="Afficher les d&eacute;tails du DVD The Matrix" border="0" /></a>
+							</td>
+						</tr>
+					<tbody>
+				</table>
+				<br>
+				Ici l'utilisateur a emprunt&eacute; le DVD "The Matrix" le 18 d&eacute;cembre. Il peut donc soit rendre ce DVD (avant le 1er janvier) soit afficher les d&eacute;tails de ce DVD.<br>
+				<br>
+				Le DVD "The Matrix Reloaded" &eacute;t&eacute; emprunt&eacute; il y a plus de 15 jours. Sa date limite de retour est donc mise en valeur afin de montrer &agrave; l'utilisateur qu'il est en retard pour rendre ce DVD.<br>Comme pr&eacute;c&eacute;demment, il peut soit rendre le DVD soit en afficher les d&eacute;tails.<br>
+				<br>
+				<h4>Mes R&eacute;servations</h4><br/>
+				<table style="width: 100%;">
+					<thead>
+						<tr>
+							<td>DVD</td>
+							<td>Date th&eacute;orique d'emprunt</td>
+							<td>Actions possibles</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="text-align:left;">The Matrix Revolutions</td>
+				
+							<td style="text-align:left;">2007-01-01</td>
+							<td style="text-align:left;">
+								<a href="ControllerCancelReserve?dvdId=3" onclick="return confirm('&Ecirc;tes-vous s&ucirc;r de vouloir annuler la r&eacute;servation du DVD The Matrix Revolutions ?')"><img hspace="2" width="16" height="16" alt="Annuler la r&eacute;servation" title="Annuler la r&eacute;servation de ce DVD" border="0" /></a>
+								<a href="view.jsp?action=details&dvdId=3">D&eacute;tails</a>
+							</td>
+						</tr>
+						<tr>
+							<td style="text-align:left;">New York 1997</td>
+							<td style="text-align:left;"><div id="validator">2006-12-17</div></td>
+							<td style="text-align:left;">
+								<a href="ControllerCancelReserve?dvdId=8" onclick="return confirm('&Ecirc;tes-vous s&ucirc;r de vouloir annuler la r&eacute;servation du DVD New York 1997 ?')"><img hspace="2" width="16" height="16" alt="Annuler la r&eacute;servation" title="Annuler la r&eacute;servation de ce DVD" border="0" /></a>
+								<a href="view.jsp?action=details&dvdId=8">D&eacute;tails</a>
+							</td>
+						</tr>
+					<tbody>
+				</table>
+				<br>
+				Ici l'utilisateur a r&eacute;serv&eacute; le DVD "The Matrix Revolutions". Il lui sera, si l'emprunteur le rend dans les temps, automatiquement emprunt&eacute; le 1er janvier. Sur ce DVD, l'utilisateur peut annuler sa r&eacute;servation (avant qu'il soit automatiquement emprunt&eacute;: le 1er janvier) ou afficher ses d&eacute;tails.<br>
+				<br>
+				La date théorique d'emprunt du DVD r&eacute;serv&eacute; "New York 1997" est en vert car nous sommes &agrave; une date sup&eacute;rieure ou &eacute;gale &agrave; cette date. Ce qui veut dire que ce DVD ne devrait pas tarder &agrave; passer dans les emprunts de l'utilisateur.<br>
+				<br>
+			</form>
+		</a>
+		
+		<a name="borrow" style="color:black;">
+			<form method=POST>
+				<h3>Emprunter un DVD</h3><br>
+				Pour emprunter un DVD, il suffit d'aller sur la page "Rechercher un DVD" et de cliquer sur le lien "Emprunter" dans les actions possibles du DVD &agrave; emprunter.<br>
+				<br>
+				ATTENTION: Il est impossible d'emprunter un DVD dans les cas suivants:
+				<ul>
+					<li>s'il est d&eacute;j&agrave; en cours d'emprunt par vous ou un autre utilisateur;</li>
+					<li>si vous l'avez emprunt&eacute; et d&eacute;j&agrave; rendu aujourd'hui.</li>
+					<li>si vous avez d&eacute;pass&eacute; votre quota de 3 DVDs emprunt&eacute;s.</li>
+				</ul>
+			</form>
+		</a>
+		
+		<a name="reserve" style="color:black;">
+			<form method=POST>
+				<h3>R&eacute;server un DVD</h3><br>
+				Pour r&eacute;server un DVD, il suffit d'aller sur la page "Rechercher un DVD" et de cliquer sur le lien "R&eacute;server" dans les actions possibles du DVD &agrave; r&eacute;server.<br>
+				<br>
+				ATTENTION: Il est impossible de r&eacute;server un DVD dans les cas suivants:
+				<ul>
+					<li>s'il n'est pas actuellement emprunt&eacute;;</li>
+					<li>s'il est d&eacute;j&agrave; r&eacute;serv&eacute; par vous ou un autre utilisateur;</li>
+					<li>s'il est actuellement emprunt&eacute; par vous;</li>
+					<li>si vous avez d&eacute;pass&eacute; votre quota de 3 DVDs r&eacute;serv&eacute;s.</li>
+				</ul>
+			</form>
+		</a>
+		
+		<a name="d&eacute;tail" style="color:black;">
+			<form method=POST>
+				<h3>Afficher les d&eacute;tails d'un DVD</h3><br>
+				Pour afficher les d&eacute;tails d'un DVD, il suffit d'aller sur la page "Rechercher un DVD" et de cliquer sur le lien "D&eacute;tails" dans les actions possibles du DVD dont on veut voir les d&eacute;tails.<br>
+				<br>
+				Remarque: Cette action peut &eacute;galement &ecirc;tre effectu&eacute;e sur les DVDs emprunt&eacute;s ou r&eacute;serv&eacute;s par l'utilisateur dans la page "Mes DVDs".<br>
+				<br>
+			</form>
+		</a>
+		
+		<a name="avis" style="color:black;">
+			<form method=POST>
+				<h3>Commenter un DVD</h3><br>
+				Pour donner un avis sur un DVD, il suffit d'aller sur la page de d&eacute;tails du DVD &agrave; commenter et de cliquer sur le lien "Ajouter un commentaire". Une seconde page vous permettra de composer votre avis et de la sauvegarder.<br>
+				<br>
+				Si l'utilisateur a d&eacute;j&agrave; comment&eacute; un DVD, il peut soit le modifier soit le supprimer.<br>
+				<br>
+			</form>
+		</a>
+		
+		<a name="uml" href="uml/classes/model.png" style="color:black;">
+			<form>
+				<h3>Le diagramme de classes en pseudo-uml</h3><br>
+				<img src="uml/classes/model.png" width="100%" height="100%" border="0" />
+				<br>
+			</form>
+		</a>
+		
+		<a name="bdd" href="uml/bdd/model.png" style="color:black;">
+			<form>
+				<h3>Le sch&eacute;ma de la base de donn&eacute;es</h3><br>
+				<img src="uml/bdd/model.png" width="100%" height="100%" border="0" />
+				<br>
+			</form>
+		</a>
+		
+	</div>
+	
+	<div id="footer">(c) 2006 - J. Delebarre, J. Wylleman</div>
+</body>
+
+</html>

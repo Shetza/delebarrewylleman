@@ -51,6 +51,7 @@
 	</div>
 	
 	<div id="content">
+		<jsp:include page="/message.jsp" flush="true" />
 	
 	<% 
 	String action = request.getParameter("action");
@@ -58,6 +59,9 @@
 		if ( user == null ) {
 			request.removeAttribute("action");
 			request.setAttribute("message", new String("Bienvenue sur le service de partage de DVDs de Johann DELEBARRE et Julien WYLLEMAN.<br>\nMerci de vous identifier."));
+			%>
+		<jsp:include page="/message.jsp" flush="true" />
+			<% 
 		}
 		else {
 		%>
@@ -68,7 +72,7 @@
 	else {
 		// Si l'utilisateur n'est pas identifie et qu'il n'est pas en cours ni d'ouverture ni de fermeture de session 
 		if ( user == null && !action.equals("login") && !action.equals("logout") ) {
-			request.setAttribute("error", new String("Acc&egrave;s restreint, veuillez vous identifier."));
+			request.setAttribute("error", new String("<table>\n<td>\n<img width=\"48\" height=\"48\" src=\"pictures/forbidden.png\" border=\"0\" />\n</td>\n<td>\n&nbsp;&nbsp;&nbsp;\n</td>\n<td>\nAcc&egrave;s restreint ou session expir&eacute;e, veuillez vous identifier.\n</td>\n</table>"));
 		}
 		else {
 			//String dvd = request.getParameter("dvd");
@@ -85,7 +89,6 @@
 	}
 	%>
 		<jsp:include page="/error.jsp" flush="true" />
-		<jsp:include page="/message.jsp" flush="true" />
 	
 	</div>
 	

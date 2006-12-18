@@ -31,7 +31,7 @@ public class Reserve extends Controller {
 			String tempDvd = request.getParameter("dvdId");
 			
 			if (tempDvd == null || tempDvd.equals("")) {
-				String error = "R&eacute;serve de DVD annul&eacute;, le DVD n'est pas correct.";
+				String error = "R&eacute;serve de DVD annul&eacute;e, le DVD n'est pas correct.";
 				super.forward("", "error", error, request, response);
 			}
 			else {
@@ -41,11 +41,11 @@ public class Reserve extends Controller {
 				Loan loan = loanDAO.getLoanById(dvdId, 0);
 				
 				if ( loan == null ) {
-					String error = "R&eacute;serve de DVD annul&eacute;, le DVD ne peut pas &ecirc;tre r&eacute;serv&eacute; puisqu'il n'est pas emprunt&eacute;.";
+					String error = "R&eacute;serve de DVD annul&eacute;e, le DVD ne peut pas &ecirc;tre r&eacute;serv&eacute; puisqu'il n'est pas emprunt&eacute;.";
 					super.forward("", "error", error, request, response);
 				}
 				else if ( loan.getReserveUser() != 0 ) {
-					String error = "R&eacute;serve de DVD annul&eacute;, le DVD est d&eacute;j&agrave; r&eacute;serv&eacute;.";
+					String error = "R&eacute;serve de DVD annul&eacute;e, le DVD est d&eacute;j&agrave; r&eacute;serv&eacute;.";
 					super.forward("", "error", error, request, response);
 				}
 				else {
@@ -55,7 +55,7 @@ public class Reserve extends Controller {
 					DVDDAO dvdDAO = factory.getDVDDAO();
 					DVD dvd = dvdDAO.getDVDById(dvdId);
 					
-					String message = "Vous venez de r&eacute;server le DVD <b>" + dvd.getTitle() + "</b>.\n<br/> Il sera automatiquement emprunter pour vous d&egrave;s qu'il sera de nouveau disponible.";
+					String message = "Vous venez de r&eacute;server le DVD <b>" + dvd.getTitle() + "</b>.\n<br/> Il sera automatiquement emprunt&eacute; pour vous d&egrave;s qu'il sera de nouveau disponible.";
 					
 					if ( loanDAO.getLoans(user).size() > 2 ) message += "\n<br/><br/>ATTENTION: Vous avez actuellement 3 DVDs &agrave; l'emprunt. Le DVD que vous venez de reserver ne sera pas emprunt&eacute; automatiquement tant que vous ne rendrez pas un de vos 3 emprunts.";
 					

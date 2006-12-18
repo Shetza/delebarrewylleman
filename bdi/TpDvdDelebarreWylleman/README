@@ -61,6 +61,18 @@ Structure de l'archive
             +---bdd
 
 
+Avant propos
+--------------------
+
+/!\ 
+	Veuillez créer un utilisateur de la base de données,
+	ayant les droits du super utilisateur.
+	
+	Login:	lemeur
+	Pass:	lemeur
+/!\ 
+
+
 Détails du TP
 --------------------
 
@@ -256,6 +268,11 @@ celle-ci ne fonctionne pas correctement, vous pouvez toujours
 positionner votre browser web à l'adresse suivante:
 	
 	http://localhost:8080/dvdthequeDelebarreWylleman/
+	
+Il existe plusieurs profils utilisateurs de l'application:
+	# Johann DELEBARRE (login: jojo / pass: toto)
+	# Julien WYLLEMAN (login: juju / pass: titi)
+	# Anne-Françoise Le Meur (login: lemeur / pass: lemeur)
 
 
 Enjoy ! 

@@ -5,7 +5,7 @@
 	%>
 	<h3>Rechercher un DVD</h3>
 	<table style="width: 100%;">
-		<thead style="text-align: left;">
+		<thead>
 			<tr>
 				<td>Titre</td>
 				<td>Cat&eacute;gorie</td>
@@ -82,7 +82,7 @@
 				// et si l'utilisateur peut encore emprunter des DVDs.
 				if ( loanDAO.isBorrowable(currentDVD) && loanDAO.canBorrow(user) ) {
 				%>
-				<a href="ControllerBorrow?dvdId=<%= currentDVD.getId() %>" onclick="return confirm('&Ecirc;tes-vous s&ucirc;r de vouloir emprunter le DVD <%= currentDVD.getTitle() %> ?')">emprunter</a>
+				<a href="ControllerBorrow?dvdId=<%= currentDVD.getId() %>" onclick="return confirm('&Ecirc;tes-vous s&ucirc;r de vouloir emprunter le DVD <%= currentDVD.getTitle() %> ?')"><img alt="Emprunter" title="Emprunter le DVD <%= currentDVD.getTitle() %>" border="0" /></a>
 				<% 
 				}
 				// Si le DVD est actuellement disponible a la reserve
@@ -90,11 +90,11 @@
 				// et si l'utilisateur peut reserver ce DVD (s'il ne l'a pas emprunte).
 				if ( loanDAO.isReservable(currentDVD) && loanDAO.canReserve(user) && loanDAO.canReserve(currentDVD, user) ) {
 				%>
-				<a href="ControllerReserve?dvdId=<%= currentDVD.getId() %>" onclick="return confirm('&Ecirc;tes-vous s&ucirc;r de vouloir r&eacute;server le DVD <%= currentDVD.getTitle() %> ?')">r&eacute;server</a>
+				<a href="ControllerReserve?dvdId=<%= currentDVD.getId() %>" onclick="return confirm('&Ecirc;tes-vous s&ucirc;r de vouloir r&eacute;server le DVD <%= currentDVD.getTitle() %> ?')"><img alt="R&eacute;server" title="R&eacute;server le DVD <%= currentDVD.getTitle() %>" border="0" /></a>
 				<% 
 				}
 				%>
-				<a href="view.jsp?action=details&dvdId=<%= currentDVD.getId() %>">D&eacute;tails</a>
+				<a href="view.jsp?action=details&dvdId=<%= currentDVD.getId() %>"><img alt="D&eacute;tails" title="Afficher les d&eacute;tails du DVD <%= currentDVD.getTitle() %>" border="0" /></a>
 			</td>
 		</tr>
 				<% 
@@ -108,10 +108,18 @@
 </form>
 
 <form>
-	<ul>
-		<li>Vous ne pouvez pas emprunter un DVD? Il est surement d&eacute;ja emprunt&eacute; par un autre utilisateur ou vous l'avez d&eacute;ja emprunt&eacute; aujourd'hui.</li>
-		<li>Vous ne pouvez pas r&eacute;server un DVD? Il est surement d&eacute;ja r&eacute;serv&eacute; par un autre utilisateur ou vous l'avez actuellement emprunt&eacute;.</li>
-		<li>Vous ne pouvez emprunter <b>aucun</b> DVD? Vous devez surement avoir atteint votre limite d'emprunt de <b>3</b> DVDs.</li>
-		<li>Vous ne pouvez r&eacute;server <b>aucun</b> DVD? Vous devez surement avoir atteint votre limite de r&eacute;serve de <b>3</b> DVDs.</li>
-	</ul>
+	<table>
+		<td>
+			<img width="64" height="64" src="pictures/interrogation.gif" border="0" />
+		</td>
+		<td>
+			&nbsp;&nbsp;&nbsp;
+		</td>
+		<td>
+			<p>Vous ne pouvez pas emprunter un DVD? Il est surement d&eacute;ja emprunt&eacute; par un autre utilisateur ou vous l'avez d&eacute;ja emprunt&eacute; aujourd'hui.</p>
+			<p>Vous ne pouvez pas r&eacute;server un DVD? Il est surement d&eacute;ja r&eacute;serv&eacute; par un autre utilisateur ou vous l'avez actuellement emprunt&eacute;.</p>
+			<p>Vous ne pouvez emprunter <b>aucun</b> DVD? Vous devez surement avoir atteint votre limite d'emprunt de <b>3</b> DVDs.</p>
+			<p>Vous ne pouvez r&eacute;server <b>aucun</b> DVD? Vous devez surement avoir atteint votre limite de r&eacute;serve de <b>3</b> DVDs.</p>
+		</td>
+	</table>
 </form>
