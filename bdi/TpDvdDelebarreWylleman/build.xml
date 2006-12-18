@@ -15,13 +15,6 @@
 	<!--
 		========== DEFAULT PROPERTIES ==========
 	-->
-	<!-- <property name="base"		value="dvdthequeDelebarreWylleman" />
- 	<property name="src"		value="${base}/WEB-INF/src" />
- 	<property name="lib"		value="lib" />
- 	<property name="classes"	value="${base}/WEB-INF/classes" />
-	 -->
-	
-	
 	<property name="src"		value="src" />
 	<property name="src-jsp"	value="${src}/views" />
 	<property name="static"		value="static" />
@@ -39,23 +32,9 @@
 	
 	<property name="excludes"	value="Thumbs.db, **/UNUSED/**" />
 	
-	<!-- <property name="src"		value="${basedir}/src" />
-	<property name="src-jsp"	value="${src}/views" />
-	<property name="static"		value="${basedir}/static" />
-	<property name="lib"		value="${basedir}/lib" />
-	<property name="build"		value="${basedir}/build" />
-	<property name="classes"	value="${build}/classes" />
-	<property name="warfile"	value="${warfilename}.war" />
-	<property name="buildwar"	value="${build}/war" />
-	<property name="dist"		value="${basedir}/dist" />
-	<property name="conf"		value="${basedir}/conf" />
-	<property name="entete"		value="${binome}-TP${numero}_${matiere}" />
-	<property name="webpage"	value="${host}:${port}/${warfilename}/" />
-	 -->
-	 
 	<path id="classpath">
 		<pathelement location="${classes}" />
- 		<fileset dir="${postgresql.home}">
+ 		<fileset dir="${lib}">
 			<include name="*.jar" />
 		</fileset>
  		<fileset dir="${catalina.home}/common/lib">
@@ -65,18 +44,7 @@
 	
 	<!--
 		========== PREPARATION OF THE DIRECTORIES ==========
-	-->
-	<target name="LASTprepare">
-		<!-- Create the build directory structure used by compile -->
-		<mkdir dir="${classes}" />
-		<!-- <copy todir="${classes}" failonerror="false">
-			<fileset dir="${lib}" includes="**/*.jar" />
-		</copy> -->
-		<copy todir="${catalina.home}/common/lib" failonerror="false">
-			<fileset dir="${lib}" includes="**/*.jar" />
-		</copy>
-	</target>
-	
+	-->	
 	<target name="prepare">
 		<!-- Create the build directory structure used by compile -->
 		<mkdir dir="${build}/lib" />
@@ -153,15 +121,6 @@
 	<!--
 		========== DEPLOY ==========
 	-->
-	<!-- <target name="deploy" depends="compile, undeploy">
-		<mkdir dir="${catalina.home}/webapps/${base}" />
-		<copy todir="${catalina.home}/webapps/${base}">
-			<fileset dir="${base}">
-				<include name="**/*" />
-			</fileset>
-		</copy>
-	</target> -->
-	
 	<target name="deploy" 
 			depends="war, undeploy"
 			description="Déploiement du fichier war dans JOnAS." >
@@ -171,14 +130,6 @@
 	<!--
 		========== UNDEPLOY ==========
 	-->
-	<!-- <target name="undeploy">
-		<delete includeEmptyDirs="true" 
-				failonerror="false"
-				verbose="true">
-			<fileset dir="${catalina.home}/webapps/${base}"/>
-		</delete>
-	</target> -->
-	
 	<target name="undeploy" 
 			description="Retrait du fichier war de JOnAS.">
 		<delete file="${catalina.home}/webapps/${warfile}" failonerror="false" />

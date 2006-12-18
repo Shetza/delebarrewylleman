@@ -61,16 +61,34 @@ Structure de l'archive
             +---bdd
 
 
-Avant propos
+Prérequis
 --------------------
 
-/!\ 
-	Veuillez créer un utilisateur de la base de données,
-	ayant les droits du super utilisateur.
+/!\ /!\ /!\ /!\ /!\
+
+	# Utilisateur 'lemeur':
+	
+	Veuillez créer un utilisateur 'lemeur' de la base de données,
+	ayant les droits du super utilisateur et de création de table.
 	
 	Login:	lemeur
 	Pass:	lemeur
-/!\ 
+	
+	Cet utilisateur est utilisé par l'application en divers endroits.
+	Notamment à la création de la base de données et du pool de connexions.
+
+
+	# CATALINA_HOME: 
+	
+	Veuillez créer la variable d'environnement 'CATALINA_HOME'
+	contenant le chemin vers la racine du répertoire de Tomcat.
+
+	Veuillez également donner les droits de lecture/écriture 
+	du répertoire de Tomcat à l'utilisateur qui executera 
+	les commandes de l'application. Ceci afin de pouvoir déployer
+	correctement le fichier war dans le répertoire webapps de Tomcat.
+	
+/!\ /!\ /!\ /!\ /!\
 
 
 Détails du TP
@@ -89,6 +107,8 @@ Les fonctions proposées pour le partage de DVDs sont les suivantes :
 	# voir les dvds empruntes et reserves
 	# rendre un dvd
 	# annuler la reservation d'un dvd
+	# afficher les détails d'un dvd
+	# commenter un dvd
 	# se 'delogger'
 
 
@@ -158,12 +178,10 @@ Toute la phase de compilation/execution du projet est gérée par Ant
 au moyen des fichiers 'build.xml' et 'build.properties'.
 
 /!\ 
-	Vérifiez bien que le fichier 'build.properties' contient 
-	bien le chemin du driver PostgresSQL (variable postgresql.home).
-/!\ 
 	Toutes les manipulations expliquées ci-aprés sont à effectuer 
 	à la racine du projet. 
 /!\
+
 
 3.0. Listes des commandes Ant 
 
@@ -193,11 +211,13 @@ au moyen des fichiers 'build.xml' et 'build.properties'.
 Remarque: Les variables '${x}' resultent de l'execution de la commande par Ant.
 	Elles sont soit ecritent dans le 'build.xml' soit dans le 'build.properties'.
 
+
 3.1. Gestion de la base de données
 
 Cette partie n'est à faire qu'une seule fois au premier lancement.
 La commande suivante permet de créer et d'initialiser la base de 
-donnees utilisée par l'application.
+donnees utilisée par l'application. Elle doit être exécutée
+par l'utilisateur lemeur.
 Six fichiers de configurations sont nécessaires à la bonne
 initialisation de la base: 
 
@@ -212,6 +232,14 @@ initialisation de la base:
 
 	$> psql -d postgres -U lemeur -f conf/general.sql
 	password: lemeur
+
+Remarque: 
+Si l'exécution de la commande précédente semble générer des erreurs,
+vous pouvez alternativement exécuter la commande suivant en tant
+qu'utilisateur postgres:
+
+	$> psql -d postgres -f conf/general.sql
+	password: <password de l'utilisateur postgres>
 
 
 3.2. Compilation du code source
@@ -232,8 +260,8 @@ définit le nom de l'archive war grâce à la variable 'warfilename'.
 
 3.4. Déploiement de l'archive war dans Tomcat
 
-Ant permet le déploiement automatique de l'archive war
-dans JOnAS. Afin d'assurer le bon fonctionnement de cette tache, 
+Ant permet le déploiement automatique de l'archive war dans Tomcat. 
+Afin d'assurer le bon fonctionnement de cette tache, 
 veillez à avoir affecter à la variable d'environnement 'CATALINA_HOME' 
 le nom complet du répertoire dans lequel vous avez installé Tomcat.
 
