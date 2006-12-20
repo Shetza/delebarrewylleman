@@ -8,7 +8,7 @@ SET client_min_messages = warning;
 -- Creations de la base de donnes --
 ------------------------------------
 
-CREATE DATABASE "dvdthequeDelebarreWylleman" WITH TEMPLATE = template0 ENCODING = 'UTF8';
+--CREATE DATABASE "dvdthequeDelebarreWylleman" WITH TEMPLATE = template0 ENCODING = 'UTF8';
 ALTER DATABASE "dvdthequeDelebarreWylleman" OWNER TO lemeur;
 
 \connect "dvdthequeDelebarreWylleman"

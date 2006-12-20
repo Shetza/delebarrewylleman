@@ -1,4 +1,0 @@
-ant deploy
-psql -d postgres -U lemeur -f conf/general.sql
-startup.bat
-ant run

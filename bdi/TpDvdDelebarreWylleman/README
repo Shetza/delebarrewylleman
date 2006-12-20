@@ -217,7 +217,7 @@ Remarque: Les variables '${x}' resultent de l'execution de la commande par Ant.
 Cette partie n'est à faire qu'une seule fois au premier lancement.
 La commande suivante permet de créer et d'initialiser la base de 
 donnees utilisée par l'application. Elle doit être exécutée
-par l'utilisateur lemeur.
+par l'utilisateur postgres.
 Six fichiers de configurations sont nécessaires à la bonne
 initialisation de la base: 
 
@@ -230,16 +230,10 @@ initialisation de la base:
     +---views.sql
 
 
-	$> psql -d postgres -U lemeur -f conf/general.sql
-	password: lemeur
-
-Remarque: 
-Si l'exécution de la commande précédente semble générer des erreurs,
-vous pouvez alternativement exécuter la commande suivant en tant
-qu'utilisateur postgres:
-
-	$> psql -d postgres -f conf/general.sql
-	password: <password de l'utilisateur postgres>
+	$> su postgres
+	$> createdb dvdthequeDelebarreWylleman
+	$> psql -f conf/general.sql
+	$> exit
 
 
 3.2. Compilation du code source

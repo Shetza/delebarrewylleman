@@ -96,6 +96,7 @@ CREATE VIEW vue_emprunts2
 	WHERE d.id = e.dvds_id
 	AND u.id = e.utilisateurs_id
 	AND e.date_reserve2emprunt IS NULL;
+GRANT ALL ON "vue_emprunts2" TO lemeur;
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -117,6 +118,7 @@ CREATE VIEW vue_reserves2
 	AND u.id = e.utilisateurs_id
 	AND e.loueur_suivant_id IS NOT NULL
 	AND e.date_reserve2emprunt IS NULL;
+GRANT ALL ON "vue_reserves2" TO lemeur;
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 -- Vue vue_nombre_emprunts
